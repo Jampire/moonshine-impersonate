@@ -1,0 +1,3 @@
+- implement impersonate permission
+- implement what users are allowed to be impersonated
+- log of user switching

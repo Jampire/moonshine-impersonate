@@ -47,6 +47,13 @@ jobs:
     with:
       cache_key: ${{ needs.env-setup.outputs.cache-key }}
 
+  code-analyse:
+      needs: [ env-setup ]
+      name: Code Analyse
+      uses: jampire/.github/.github/workflows/_code_analyse.yml@master
+      with:
+          cache_key: ${{ needs.env-setup.outputs.cache-key }}
+
   tests:
     needs: [ env-setup ]
     name: Tests
@@ -54,4 +61,4 @@ jobs:
     with:
       cache_key: ${{ needs.env-setup.outputs.cache-key }}
       extensions: ${{ needs.env-setup.outputs.extensions }}
-      min_coverage: 80
+      min_coverage: 100

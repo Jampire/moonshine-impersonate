@@ -29,8 +29,12 @@
     },
     "require-dev": {
         "laravel/pint": "^1.10",
+        "moonshine/moonshine": "^1.56",
+        "nunomaduro/collision": "^7.5",
         "nunomaduro/larastan": "^2.0",
-        "pestphp/pest": "^2.6"
+        "orchestra/testbench": "^8.5",
+        "pestphp/pest": "^2.6",
+        "pestphp/pest-plugin-laravel": "^2.0"
     },
     "autoload": {
         "psr-4": {
@@ -39,21 +43,26 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Jampire\\MoonshineImpersonate\\Tests\\": "tests/"
+            "Jampire\\MoonshineImpersonate\\Tests\\": "tests/",
+            "Jampire\\MoonshineImpersonate\\Database\\Factories\\": "database/factories"
         }
     },
     "conflict": {
         "moonshine/moonshine": "<1.52"
     },
     "scripts": {
+        "post-autoload-dump": [
+            "@php vendor/bin/testbench package:discover --ansi"
+        ],
         "style": "./vendor/bin/pint --test -v --ansi",
         "fix-style": "./vendor/bin/pint --ansi",
         "analyse": "./vendor/bin/phpstan analyse --ansi --memory-limit=-1",
         "tests": "./vendor/bin/pest --no-coverage --parallel",
-        "tests-coverage": "XDEBUG_MODE=coverage ./vendor/bin/pest --coverage --min=80 --parallel",
+        "tests-coverage": "XDEBUG_MODE=coverage ./vendor/bin/pest --coverage --min=100 --parallel",
         "all": [
             "@composer validate --strict --ansi",
             "@style",
+            "@analyse",
             "@tests-coverage"
         ]
     },
@@ -66,7 +75,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Jampire\\MoonshineImpersonate\\MoonshineImpersonateServiceProvider"
+                "Jampire\\MoonshineImpersonate\\ImpersonateServiceProvider"
             ]
         }
     },

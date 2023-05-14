@@ -1,0 +1,11 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Access to an undefined property Illuminate\\\\Support\\\\ValidatedInput\\:\\:\\$id\\.$#"
+			count: 1
+			path: src/Http/Controllers/ImpersonateController.php
+
+		-
+			message: "#^Parameter \\#1 \\$moonshineUser of class Jampire\\\\MoonshineImpersonate\\\\Services\\\\ImpersonateManager constructor expects Illuminate\\\\Contracts\\\\Auth\\\\Authenticatable, Illuminate\\\\Foundation\\\\Auth\\\\User\\|null given\\.$#"
+			count: 1
+			path: src/ImpersonateServiceProvider.php
