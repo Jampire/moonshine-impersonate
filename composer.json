@@ -1,0 +1,75 @@
+{
+    "name": "jampire/moonshine-impersonate",
+    "type": "library",
+    "description": "User Impersonation in MoonShine admin panel",
+    "keywords": [
+        "impersonation",
+        "user-proxy",
+        "laravel",
+        "moonshine",
+        "authorization",
+        "permission"
+    ],
+    "homepage": "https://github.com/Jampire/moonshine-impersonate",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Dzianis Kotau",
+            "email": "me@dzianiskotau.com",
+            "homepage": "https://dzianiskotau.com/",
+            "role": "Owner"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/Jampire/moonshine-impersonate/issues",
+        "source": "https://github.com/Jampire/moonshine-impersonate"
+    },
+    "require": {
+        "php": "^8.2"
+    },
+    "require-dev": {
+        "laravel/pint": "^1.10",
+        "nunomaduro/larastan": "^2.0",
+        "pestphp/pest": "^2.6"
+    },
+    "autoload": {
+        "psr-4": {
+            "Jampire\\MoonshineImpersonate\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Jampire\\MoonshineImpersonate\\Tests\\": "tests/"
+        }
+    },
+    "conflict": {
+        "moonshine/moonshine": "<1.52"
+    },
+    "scripts": {
+        "style": "./vendor/bin/pint --test -v --ansi",
+        "fix-style": "./vendor/bin/pint --ansi",
+        "analyse": "./vendor/bin/phpstan analyse --ansi --memory-limit=-1",
+        "tests": "./vendor/bin/pest --no-coverage --parallel",
+        "tests-coverage": "XDEBUG_MODE=coverage ./vendor/bin/pest --coverage --min=80 --parallel",
+        "all": [
+            "@composer validate --strict --ansi",
+            "@style",
+            "@tests-coverage"
+        ]
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Jampire\\MoonshineImpersonate\\MoonshineImpersonateServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

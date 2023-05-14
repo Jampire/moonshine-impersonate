@@ -1,0 +1,11 @@
+composer.lock
+/.phpunit.cache
+/vendor
+.phpunit.result.cache
+/.idea
+/.vscode
+phpstan.neon
+phpunit.xml
+.phpstorm.meta.php
+_ide_helper.php
+_ide_helper_models.php
