@@ -27,14 +27,14 @@ class ImpersonateServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
-        $this->publishConfig();
+        $this->publishImpersonateResources();
 
         $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
 
         $this->loadTranslationsFrom(__DIR__.'/../lang', 'ms-impersonate');
     }
 
-    private function publishConfig(): void
+    private function publishImpersonateResources(): void
     {
         if (!$this->app->runningInConsole()) {
             // @codeCoverageIgnoreStart
@@ -47,7 +47,18 @@ class ImpersonateServiceProvider extends ServiceProvider
                 __DIR__.'/../config/ms-impersonate.php' => config_path('ms-impersonate.php'),
             ],
             [
+                'ms-impersonate',
                 'config',
+            ]
+        );
+
+        $this->publishes(
+            [
+                __DIR__.'/../lang' => $this->app->langPath('vendor/ms_impersonate')
+            ],
+            [
+                'ms-impersonate',
+                'lang',
             ]
         );
     }
