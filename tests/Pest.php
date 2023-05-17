@@ -1,5 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
+use Jampire\MoonshineImpersonate\Tests\Stubs\Models\MoonshineUser;
+use Jampire\MoonshineImpersonate\Tests\Stubs\Models\User;
+use Jampire\MoonshineImpersonate\Tests\TestCase;
+
 /*
 |--------------------------------------------------------------------------
 | Test Case
@@ -11,7 +17,7 @@
 |
 */
 
-// uses(Tests\TestCase::class)->in('Feature');
+uses(TestCase::class)->in('Feature', 'Unit');
 
 /*
 |--------------------------------------------------------------------------
@@ -39,7 +45,55 @@ expect()->extend('toBeOne', function () {
 |
 */
 
-function something()
+function enableMoonShineGuard(): void
 {
-    // ..
+    config([
+        'moonshine.auth.enable' => true,
+        'moonshine.auth.guard' => 'moonshine',
+    ]);
+}
+
+function setAuthConfig(): void
+{
+    config([
+        'auth' => [
+            'defaults' => [
+                'guard' => 'web',
+                'passwords' => 'users',
+            ],
+            'guards' => [
+                'web' => [
+                    'driver' => 'session',
+                    'provider' => 'users',
+                ],
+                'fake' => [
+                    'driver' => 'session',
+                    'provider' => 'users',
+                ],
+                'moonshine' => [
+                    'driver' => 'session',
+                    'provider' => 'moonshine',
+                ],
+            ],
+            'providers' => [
+                'users' => [
+                    'driver' => 'eloquent',
+                    'model' => User::class,
+                ],
+                'moonshine' => [
+                    'driver' => 'eloquent',
+                    'model' => MoonshineUser::class,
+                ],
+            ],
+            'passwords' => [
+                'users' => [
+                    'provider' => 'users',
+                    'table' => 'password_reset_tokens',
+                    'expire' => 60,
+                    'throttle' => 60,
+                ],
+            ],
+            'password_timeout' => 10800,
+        ],
+    ]);
 }

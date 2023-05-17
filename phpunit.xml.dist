@@ -3,6 +3,14 @@
          xsi:noNamespaceSchemaLocation="./vendor/phpunit/phpunit/phpunit.xsd"
          bootstrap="vendor/autoload.php"
          colors="true"
+         backupGlobals="false"
+         backupStaticAttributes="false"
+         verbose="true"
+         convertErrorsToExceptions="true"
+         convertNoticesToExceptions="true"
+         convertWarningsToExceptions="true"
+         processIsolation="false"
+         stopOnFailure="false"
 >
     <testsuites>
         <testsuite name="Unit">
@@ -16,10 +24,21 @@
         <include>
             <directory suffix=".php">./src</directory>
         </include>
+        <exclude>
+            <file>./src/Rules/CanImpersonate.php</file>
+        </exclude>
         <report>
             <clover outputFile="./build/coverage/log/coverage.xml"/>
             <html outputDirectory="./build/coverage/html" lowUpperBound="35" highLowerBound="80"/>
             <text outputFile="./build/coverage/log/coverage.txt" showUncoveredFiles="true" showOnlySummary="true"/>
         </report>
     </coverage>
+    <php>
+        <env name="DB_CONNECTION" value="testing"/>
+        <env name="APP_KEY" value="base64:IRvxzgVXG9MnUTYXdcrUF36qj9ziUzJ4Wzo+AUiZ9d4="/>
+        <env name="MS_IMPERSONATE_ROUTE_MIDDLEWARE" value="web"/>
+        <ini name="date.timezone" value="UTC" />
+        <ini name="intl.default_locale" value="C.UTF-8" />
+        <ini name="memory_limit" value="2048M" />
+    </php>
 </phpunit>
