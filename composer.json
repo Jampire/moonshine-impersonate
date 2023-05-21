@@ -1,7 +1,7 @@
 {
     "name": "jampire/moonshine-impersonate",
     "type": "library",
-    "description": "User Impersonation in MoonShine admin panel",
+    "description": "User Impersonation for MoonShine admin panel",
     "keywords": [
         "impersonation",
         "user-proxy",

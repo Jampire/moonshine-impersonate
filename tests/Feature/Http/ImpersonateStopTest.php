@@ -9,7 +9,7 @@ use Jampire\MoonshineImpersonate\Tests\Stubs\Models\MoonshineUser;
 use Jampire\MoonshineImpersonate\Tests\Stubs\Models\User;
 
 use function Pest\Laravel\actingAs;
-use function Pest\Laravel\delete;
+use function Pest\Laravel\get;
 use function Pest\Laravel\post;
 
 beforeEach(function () {
@@ -23,13 +23,13 @@ test('privileged user can stop impersonation', function () {
     $moonShineUser = MoonshineUser::factory()->create();
 
     actingAs($moonShineUser, Settings::moonShineGuard());
-    post(route('impersonate.enter'), [
+    post(route('ms-impersonate.enter'), [
         'id' => $user->id,
     ])
         ->assertSessionHasNoErrors()
         ->assertRedirect('/');
 
-    $response = delete(route('impersonate.stop'));
+    $response = get(route('ms-impersonate.stop'));
 
     $response
         ->assertSessionHasNoErrors()
@@ -57,14 +57,14 @@ test('privileged user can stop impersonation', function () {
 });
 
 test('unauthorized user cannot stop impersonation', function () {
-    $response = delete(route('impersonate.stop'));
+    $response = get(route('ms-impersonate.stop'));
 
     $response->assertForbidden();
 });
 
 test('regular user cannot stop impersonation', function () {
     actingAs(User::factory()->create(), 'web');
-    $response = delete(route('impersonate.stop'));
+    $response = get(route('ms-impersonate.stop'));
 
     $response->assertForbidden();
 });
@@ -73,7 +73,7 @@ it('cannot stop impersonation if impersonation mode is not enabled', function ()
     $moonShineUser = MoonshineUser::factory()->create();
 
     actingAs($moonShineUser, Settings::moonShineGuard());
-    $response = delete(route('impersonate.stop'));
+    $response = get(route('ms-impersonate.stop'));
 
     $response->assertSessionHasErrors([
         Settings::key() => __('ms-impersonate::validation.stop.is_not_impersonating'),

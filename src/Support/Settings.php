@@ -11,6 +11,8 @@ namespace Jampire\MoonshineImpersonate\Support;
  */
 class Settings
 {
+    public const ALIAS = 'ms-impersonate';
+
     /**
      * @return class-string
      */

@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Jampire\MoonshineImpersonate\Services;
 
 use Illuminate\Contracts\Auth\Authenticatable;
-use Illuminate\Foundation\Auth\User;
 use Jampire\MoonshineImpersonate\Support\Settings;
 
 /**
@@ -15,22 +14,22 @@ use Jampire\MoonshineImpersonate\Support\Settings;
  */
 final class ImpersonateManager
 {
-    private Authenticatable|User|null $user = null;
+    private ?Authenticatable $user = null;
 
     public function __construct(
-        public readonly Authenticatable|User $moonshineUser,
+        public readonly Authenticatable $moonshineUser,
     ) {
         //
     }
 
-    public function findUserById(int $id): ?Authenticatable
+    public function findUserById(int $id): Authenticatable
     {
-        if ($this->user !== null && $this->user->getKey() === $id) {
+        if ($this->user !== null && $this->user->getAuthIdentifier() === $id) {
             return $this->user;
         }
 
-        $userModel = Settings::userClass();
-        $this->user = $userModel::query()->find($id);
+        $userModel = Settings::userClass(); // TODO: if provider is 'database' ?
+        $this->user = $userModel::query()->findOrFail($id);
 
         return $this->user;
     }
@@ -40,12 +39,42 @@ final class ImpersonateManager
         // @codeCoverageIgnoreStart
         try {
             $id = session()->get(Settings::key());
-        } catch (\Throwable $e) {
+        } catch (\Throwable) {
             return null;
         }
         // @codeCoverageIgnoreEnd
 
         return $id === null ? null : $this->findUserById($id);
+    }
+
+    public function canEnter(Authenticatable $userToImpersonate): bool
+    {
+        if ($this->isImpersonating()) {
+            return false;
+        }
+
+        if (!$this->canImpersonate()) {
+            return false;
+        }
+
+        if (!$this->canBeImpersonated($userToImpersonate)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public function canStop(): bool
+    {
+        if (!$this->isImpersonating()) {
+            return false;
+        }
+
+        if (!$this->canImpersonate()) {
+            return false;
+        }
+
+        return true;
     }
 
     public function isImpersonating(): bool
@@ -60,18 +89,18 @@ final class ImpersonateManager
         return true;
     }
 
-    public function canBeImpersonated(Authenticatable|User $user = null): bool
+    public function canBeImpersonated(Authenticatable $userToImpersonate): bool
     {
-        // TODO: implement what users are allowed to be impersonated
+        // TODO: implement which users are allowed to be impersonated
 
-        return $user !== null;
+        return $userToImpersonate->getAuthIdentifier() > 0;
     }
 
-    public function saveAuthInSession(Authenticatable|User $user): void
+    public function saveAuthInSession(Authenticatable $user): void
     {
         session([
-            config('ms-impersonate.key') => $user->getKey(),
-            Settings::impersonatorSessionKey() => $this->moonshineUser->getKey(),
+            config('ms-impersonate.key') => $user->getAuthIdentifier(),
+            Settings::impersonatorSessionKey() => $this->moonshineUser->getAuthIdentifier(),
             Settings::impersonatorSessionGuardKey() => Settings::moonShineGuard(),
         ]);
     }

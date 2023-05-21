@@ -26,7 +26,7 @@ test('privileged user can impersonate another user', function () {
     ]);
 
     actingAs($moonShineUser, Settings::moonShineGuard());
-    $response = post(route('impersonate.enter'), [
+    $response = post(route('ms-impersonate.enter'), [
         'id' => $user->id,
     ]);
 
@@ -51,7 +51,7 @@ test('privileged user can impersonate another user', function () {
 });
 
 test('unauthorized user cannot impersonate another user', function () {
-    $response = post(route('impersonate.enter'), [
+    $response = post(route('ms-impersonate.enter'), [
         'id' => User::factory()->create()->id,
     ]);
 
@@ -66,7 +66,7 @@ test('regular user cannot impersonate another user', function () {
     $user = User::factory()->create();
 
     actingAs($user, 'web');
-    $response = post(route('impersonate.enter'), [
+    $response = post(route('ms-impersonate.enter'), [
         'id' => $user->id,
     ]);
 
@@ -82,7 +82,7 @@ it('cannot impersonate non-existent user', function () {
     $moonShineUser = MoonshineUser::factory()->create();
 
     actingAs($moonShineUser, Settings::moonShineGuard());
-    $response = post(route('impersonate.enter'), [
+    $response = post(route('ms-impersonate.enter'), [
         'id' => $user->id + 1,
     ]);
 
@@ -100,7 +100,7 @@ it('cannot impersonate if already in impersonation mode', function () {
     actingAs($moonShineUser, Settings::moonShineGuard())
         ->withSession([Settings::key() => $user->getKey()]);
 
-    $response = post(route('impersonate.enter'), [
+    $response = post(route('ms-impersonate.enter'), [
         'id' => $user->id,
     ]);
 
