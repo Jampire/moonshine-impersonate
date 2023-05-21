@@ -25,7 +25,7 @@ class StopFormRequest extends FormRequest
             if (!app(ImpersonateManager::class)->isImpersonating()) {
                 $validator->errors()->add(
                     Settings::key(),
-                    __('ms-impersonate::validation.stop.is_not_impersonating')
+                    trans_impersonate('validation.stop.is_not_impersonating')
                 );
             }
         });

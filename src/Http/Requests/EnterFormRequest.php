@@ -45,7 +45,7 @@ class EnterFormRequest extends FormRequest
     public function attributes(): array
     {
         return [
-            'id' => __('ms-impersonate::validation.enter.id'),
+            'id' => trans_impersonate('validation.enter.id'),
         ];
     }
 }

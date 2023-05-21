@@ -8,8 +8,8 @@ use Jampire\MoonshineImpersonate\Support\Settings;
 
 Route::controller(ImpersonateController::class)
     ->name(Settings::ALIAS.'.')
-    ->prefix(config('ms-impersonate.routes.prefix'))
-    ->middleware(config('ms-impersonate.routes.middleware'))
+    ->prefix(config_impersonate('routes.prefix'))
+    ->middleware(config_impersonate('routes.middleware'))
     ->group(function () {
         Route::post('/enter', 'enter')->name('enter');
         Route::get('/stop', 'stop')->name('stop');

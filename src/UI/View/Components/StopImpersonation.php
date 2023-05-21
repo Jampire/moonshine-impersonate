@@ -37,7 +37,7 @@ class StopImpersonation extends Component
 
     public function render(): View
     {
-        return view_impersonate('components.stop');
+        return view_impersonate('components.impersonate-stop');
     }
 
     public function shouldRender(): bool
