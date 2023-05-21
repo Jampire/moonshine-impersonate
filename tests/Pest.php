@@ -97,7 +97,3 @@ function setAuthConfig(): void
         ],
     ]);
 }
-
-function setMoonshineViewComponents(): void
-{
-}
