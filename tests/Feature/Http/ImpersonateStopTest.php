@@ -23,20 +23,20 @@ test('privileged user can stop impersonation', function () {
     $moonShineUser = MoonshineUser::factory()->create();
 
     actingAs($moonShineUser, Settings::moonShineGuard());
-    post(route('ms-impersonate.enter'), [
+    post(route_impersonate('enter'), [
         'id' => $user->id,
     ])
         ->assertSessionHasNoErrors()
         ->assertRedirect('/');
 
-    $response = get(route('ms-impersonate.stop'));
+    $response = get(route_impersonate('stop'));
 
     $response
         ->assertSessionHasNoErrors()
         ->assertRedirect();
 
     $session = session();
-    expect($session->get(config('ms-impersonate.key')))
+    expect($session->get(config_impersonate('key')))
         ->toBeEmpty()
         ->and($session->get(Settings::impersonatorSessionKey()))
         ->toBeEmpty()
@@ -44,9 +44,6 @@ test('privileged user can stop impersonation', function () {
         ->toBeEmpty()
         ->and(auth()->user())
         ->toBeEmpty()
-        // This is MoonShine bug
-        // ->and(auth(Settings::moonShineGuard())->user()->name)
-        // ->toBe($moonShineUser->name)
     ;
 
     Event::assertDispatched(
@@ -57,25 +54,24 @@ test('privileged user can stop impersonation', function () {
 });
 
 test('unauthorized user cannot stop impersonation', function () {
-    $response = get(route('ms-impersonate.stop'));
-
-    $response->assertForbidden();
+    get(route_impersonate('stop'))
+        ->assertForbidden();
 });
 
 test('regular user cannot stop impersonation', function () {
     actingAs(User::factory()->create(), 'web');
-    $response = get(route('ms-impersonate.stop'));
 
-    $response->assertForbidden();
+    get(route_impersonate('stop'))
+        ->assertForbidden();
 });
 
 it('cannot stop impersonation if impersonation mode is not enabled', function () {
     $moonShineUser = MoonshineUser::factory()->create();
 
     actingAs($moonShineUser, Settings::moonShineGuard());
-    $response = get(route('ms-impersonate.stop'));
+    $response = get(route_impersonate('stop'));
 
     $response->assertSessionHasErrors([
-        Settings::key() => __('ms-impersonate::validation.stop.is_not_impersonating'),
+        Settings::key() => trans_impersonate('validation.stop.is_not_impersonating'),
     ]);
 });

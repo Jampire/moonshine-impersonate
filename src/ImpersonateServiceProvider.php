@@ -75,7 +75,7 @@ class ImpersonateServiceProvider extends ServiceProvider
         $auth = app('auth');
 
         $auth->extend('session', function (Application $app, $name, array $config) use ($auth) {
-            $provider = $auth->createUserProvider($config['provider']); // TODO: dd
+            $provider = $auth->createUserProvider($config['provider']);
 
             $guard = new SessionGuard($name, $provider, $app['session.store']);
 
@@ -97,7 +97,7 @@ class ImpersonateServiceProvider extends ServiceProvider
 
     private function registerViews(): void
     {
-        $prefix = 'impersonate';
+        $prefix = 'impersonate'; // TODO: make all aliases as 'impersonate'
 
         $this->loadViewComponentsAs($prefix, [
             'stop' => StopImpersonation::class,

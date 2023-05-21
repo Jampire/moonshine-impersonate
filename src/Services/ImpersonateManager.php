@@ -53,6 +53,7 @@ final class ImpersonateManager
             return false;
         }
 
+        // @codeCoverageIgnoreStart
         if (!$this->canImpersonate()) {
             return false;
         }
@@ -60,6 +61,7 @@ final class ImpersonateManager
         if (!$this->canBeImpersonated($userToImpersonate)) {
             return false;
         }
+        // @codeCoverageIgnoreEnd
 
         return true;
     }
@@ -99,7 +101,7 @@ final class ImpersonateManager
     public function saveAuthInSession(Authenticatable $user): void
     {
         session([
-            config('ms-impersonate.key') => $user->getAuthIdentifier(),
+            config_impersonate('key') => $user->getAuthIdentifier(),
             Settings::impersonatorSessionKey() => $this->moonshineUser->getAuthIdentifier(),
             Settings::impersonatorSessionGuardKey() => Settings::moonShineGuard(),
         ]);
@@ -108,7 +110,7 @@ final class ImpersonateManager
     public function clearAuthFromSession(): void
     {
         session()->forget([
-            config('ms-impersonate.key'),
+            config_impersonate('key'),
             Settings::impersonatorSessionKey(),
             Settings::impersonatorSessionGuardKey(),
         ]);

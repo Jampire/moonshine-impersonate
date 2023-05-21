@@ -26,6 +26,7 @@
         </include>
         <exclude>
             <file>./src/Rules/CanImpersonate.php</file>
+            <file>./src/Rules/CanBeImpersonated.php</file>
         </exclude>
         <report>
             <clover outputFile="./build/coverage/log/coverage.xml"/>

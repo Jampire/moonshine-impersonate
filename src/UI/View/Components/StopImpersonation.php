@@ -7,7 +7,6 @@ namespace Jampire\MoonshineImpersonate\UI\View\Components;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 use Jampire\MoonshineImpersonate\Services\ImpersonateManager;
-use Jampire\MoonshineImpersonate\Support\Settings;
 
 /**
  * Class StopImpersonation
@@ -30,15 +29,15 @@ class StopImpersonation extends Component
         string $icon = null,
         string $class = null,
     ) {
-        $this->route = $route === null ? route(Settings::ALIAS.'.stop') : $route;
-        $this->label = $label === null ? __(Settings::ALIAS.'::ui.buttons.stop.label') : $label;
-        $this->icon = $icon === null ? config('ms-impersonate.buttons.stop.icon') : $icon;
-        $this->class = $class === null ? config('ms-impersonate.buttons.stop.class') : $class;
+        $this->route = $route === null ? route_impersonate('stop') : $route;
+        $this->label = $label === null ? trans_impersonate('ui.buttons.stop.label') : $label;
+        $this->icon = $icon === null ? config_impersonate('buttons.stop.icon') : $icon;
+        $this->class = $class === null ? config_impersonate('buttons.stop.class') : $class;
     }
 
     public function render(): View
     {
-        return view('impersonate::components.stop');
+        return view_impersonate('components.stop');
     }
 
     public function shouldRender(): bool

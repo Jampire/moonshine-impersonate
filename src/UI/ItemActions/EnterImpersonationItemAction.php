@@ -24,12 +24,12 @@ final class EnterImpersonationItemAction implements ItemActionContact
         $action = app(EnterAction::class);
 
         return ItemAction::make(
-            __('ms-impersonate::ui.buttons.enter.label'),
+            trans_impersonate('ui.buttons.enter.label'),
             fn (Authenticatable $item) => $action->execute($item->getAuthIdentifier(), true),
-            __('ms-impersonate::ui.buttons.enter.message') // TODO: set message from $action->execute
+            trans_impersonate('ui.buttons.enter.message') // TODO: set message from $action->execute
         )
             ->canSee(fn (Authenticatable $item) => $action->manager->canEnter($item))
-            ->icon(config('ms-impersonate.buttons.enter.icon'))
+            ->icon(config_impersonate('buttons.enter.icon'))
         ;
     }
 }
