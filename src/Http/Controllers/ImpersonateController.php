@@ -28,7 +28,7 @@ class ImpersonateController extends Controller
             // @codeCoverageIgnoreEnd
         }
 
-        return redirect(config('ms-impersonate.redirect_to'));
+        return redirect(config_impersonate('redirect_to'));
     }
 
     public function stop(StopFormRequest $request, StopAction $action): Redirector|RedirectResponse
@@ -41,6 +41,6 @@ class ImpersonateController extends Controller
             // @codeCoverageIgnoreEnd
         }
 
-        return redirect(config('ms-impersonate.redirect_to'));
+        return redirect(config_impersonate('redirect_to'));
     }
 }

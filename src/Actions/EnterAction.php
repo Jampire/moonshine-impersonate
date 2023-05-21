@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace Jampire\MoonshineImpersonate\Actions;
 
-use Illuminate\Support\Facades\Auth;
 use Jampire\MoonshineImpersonate\Events\ImpersonationEntered;
 use Jampire\MoonshineImpersonate\Services\ImpersonateManager;
-use Jampire\MoonshineImpersonate\Support\Settings;
 
 /**
  * Class EnterAction
@@ -17,24 +15,25 @@ use Jampire\MoonshineImpersonate\Support\Settings;
 final readonly class EnterAction
 {
     public function __construct(
-        private ImpersonateManager $manager
+        public ImpersonateManager $manager
     ) {
         //
     }
 
-    public function execute(int $id): bool
+    /**
+     * @param int $id ID of the impersonated user
+     * @param bool $shouldValidate
+     * @return bool
+     */
+    public function execute(int $id, bool $shouldValidate = false): bool
     {
         $user = $this->manager->findUserById($id);
 
-        if ($user === null) {
+        if ($shouldValidate && !$this->manager->canEnter($user)) {
             return false;
         }
 
         $this->manager->saveAuthInSession($user);
-
-        Auth::guard(Settings::defaultGuard())->logout();
-        Auth::guard(Settings::defaultGuard())->setUser($user);
-        // Auth::onceUsingId($user->id);
 
         ImpersonationEntered::dispatch($this->manager->moonshineUser, $user);
 

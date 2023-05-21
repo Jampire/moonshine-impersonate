@@ -7,6 +7,7 @@ namespace Jampire\MoonshineImpersonate\Actions;
 use Illuminate\Support\Facades\Auth;
 use Jampire\MoonshineImpersonate\Events\ImpersonationStopped;
 use Jampire\MoonshineImpersonate\Services\ImpersonateManager;
+use Jampire\MoonshineImpersonate\Support\Settings;
 
 /**
  * Class StopAction
@@ -28,7 +29,7 @@ final readonly class StopAction
             return false;
         }
 
-        Auth::logout();
+        Auth::guard(Settings::defaultGuard())->quietLogout();
         $this->manager->clearAuthFromSession();
 
         ImpersonationStopped::dispatch($this->manager->moonshineUser, $user);

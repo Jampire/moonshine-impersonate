@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Jampire\MoonshineImpersonate\Tests;
 
+use Illuminate\Foundation\Testing\Concerns\InteractsWithViews;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Jampire\MoonshineImpersonate\ImpersonateServiceProvider;
 use Orchestra\Testbench\TestCase as BaseTestCase;
@@ -11,6 +12,7 @@ use Orchestra\Testbench\TestCase as BaseTestCase;
 abstract class TestCase extends BaseTestCase
 {
     use RefreshDatabase;
+    use InteractsWithViews;
 
     protected function setUp(): void
     {
