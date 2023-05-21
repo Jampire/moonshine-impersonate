@@ -57,13 +57,9 @@ final class ImpersonateManager
         if (!$this->canImpersonate()) {
             return false;
         }
-
-        return ! (!$this->canBeImpersonated($userToImpersonate))
-
-
         // @codeCoverageIgnoreEnd
 
-        ;
+        return ! (!$this->canBeImpersonated($userToImpersonate));
     }
 
     public function canStop(): bool
@@ -72,13 +68,7 @@ final class ImpersonateManager
             return false;
         }
 
-        // @codeCoverageIgnoreStart
-        return ! (!$this->canImpersonate())
-
-
-        // @codeCoverageIgnoreEnd
-
-        ;
+        return ! (!$this->canImpersonate());
     }
 
     public function isImpersonating(): bool
