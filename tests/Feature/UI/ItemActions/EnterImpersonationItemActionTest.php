@@ -8,6 +8,7 @@ use Jampire\MoonshineImpersonate\Tests\Stubs\Models\User;
 use Jampire\MoonshineImpersonate\UI\ItemActions\EnterImpersonationItemAction;
 
 use MoonShine\ItemActions\ItemAction;
+
 use function Pest\Laravel\actingAs;
 
 it('resolves correct item action class', function () {

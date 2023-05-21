@@ -1,11 +1,26 @@
 parameters:
 	ignoreErrors:
 		-
+			message: "#^Call to an undefined method Illuminate\\\\Contracts\\\\Auth\\\\StatefulGuard\\:\\:quietLogout\\(\\)\\.$#"
+			count: 1
+			path: src/Actions/StopAction.php
+
+		-
 			message: "#^Access to an undefined property Illuminate\\\\Support\\\\ValidatedInput\\:\\:\\$id\\.$#"
 			count: 1
 			path: src/Http/Controllers/ImpersonateController.php
 
 		-
+			message: "#^Call to an undefined method Illuminate\\\\Contracts\\\\Auth\\\\StatefulGuard\\:\\:quietLogin\\(\\)\\.$#"
+			count: 1
+			path: src/Http/Middleware/ImpersonateMiddleware.php
+
+		-
 			message: "#^Parameter \\#1 \\$moonshineUser of class Jampire\\\\MoonshineImpersonate\\\\Services\\\\ImpersonateManager constructor expects Illuminate\\\\Contracts\\\\Auth\\\\Authenticatable, Illuminate\\\\Foundation\\\\Auth\\\\User\\|null given\\.$#"
+			count: 1
+			path: src/ImpersonateServiceProvider.php
+
+		-
+			message: "#^Parameter \\#2 \\$provider of class Jampire\\\\MoonshineImpersonate\\\\Guards\\\\SessionGuard constructor expects Illuminate\\\\Contracts\\\\Auth\\\\UserProvider, Illuminate\\\\Contracts\\\\Auth\\\\UserProvider\\|null given\\.$#"
 			count: 1
 			path: src/ImpersonateServiceProvider.php

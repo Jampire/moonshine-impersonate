@@ -8,6 +8,7 @@ use Jampire\MoonshineImpersonate\Support\Settings;
 use Jampire\MoonshineImpersonate\Tests\Stubs\Models\MoonshineUser;
 
 use Jampire\MoonshineImpersonate\Tests\Stubs\Models\User;
+
 use function Pest\Laravel\actingAs;
 
 beforeEach(function () {

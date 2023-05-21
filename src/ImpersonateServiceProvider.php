@@ -110,6 +110,10 @@ class ImpersonateServiceProvider extends ServiceProvider
                 'moonshine.header' => $prefix . '::impersonate.buttons.stop',
             ]);
         }
+
+        if ($this->app->runningUnitTests()) {
+            $this->loadViewsFrom(__DIR__.'/../tests/Stubs/resources/views', 'moonshine');
+        }
     }
 
     private function publishImpersonateResources(): void

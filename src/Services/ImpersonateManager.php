@@ -58,12 +58,12 @@ final class ImpersonateManager
             return false;
         }
 
-        if (!$this->canBeImpersonated($userToImpersonate)) {
-            return false;
-        }
+        return ! (!$this->canBeImpersonated($userToImpersonate))
+
+
         // @codeCoverageIgnoreEnd
 
-        return true;
+        ;
     }
 
     public function canStop(): bool
@@ -72,11 +72,13 @@ final class ImpersonateManager
             return false;
         }
 
-        if (!$this->canImpersonate()) {
-            return false;
-        }
+        // @codeCoverageIgnoreStart
+        return ! (!$this->canImpersonate())
 
-        return true;
+
+        // @codeCoverageIgnoreEnd
+
+        ;
     }
 
     public function isImpersonating(): bool
