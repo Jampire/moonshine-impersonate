@@ -9,15 +9,10 @@ use function Pest\Laravel\actingAs;
 it('correctly renders stop button with defaults', function () {
     $view = $this->component(StopImpersonation::class);
 
-    $view->assertSee(
-        trans_impersonate('ui.buttons.stop.label')
-    );
-    $view->assertSee(
-        route_impersonate('stop')
-    );
-    $view->assertSee(
-        config_impersonate('buttons.stop.class')
-    );
+    $view
+        ->assertSee(trans_impersonate('ui.buttons.stop.label'))
+        ->assertSee(route_impersonate('stop'))
+        ->assertSee(config_impersonate('buttons.stop.class'));
 });
 
 it('correctly renders stop button', function () {
@@ -26,12 +21,13 @@ it('correctly renders stop button', function () {
         'class' => 'btn-red',
     ]);
 
-    $view->assertSee('Label');
-    $view->assertSee(route_impersonate('stop'));
-    $view->assertSee('btn-red');
+    $view
+        ->assertSee('Label')
+        ->assertSee(route_impersonate('stop'))
+        ->assertSee('btn-red');
 });
 
-it('renders with permission', function () {
+it('renders stop button with permission', function () {
     $moonShineUser = MoonshineUser::factory()->create();
     actingAs($moonShineUser, Settings::moonShineGuard())
         ->withSession([config_impersonate('key') => 1]);
@@ -43,7 +39,7 @@ it('renders with permission', function () {
     ;
 });
 
-it('does not render when there is no permission', function () {
+it('does not render stop button when without permissions', function () {
     $moonShineUser = MoonshineUser::factory()->create();
     actingAs($moonShineUser, Settings::moonShineGuard());
 
