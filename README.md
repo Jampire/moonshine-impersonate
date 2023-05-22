@@ -19,7 +19,7 @@ saves lots of time because you can see exactly what they see.
 
 ## Installation
 
-Use `composer` to install this package:
+Use `composer` to install `MoonShine Impersonate` package:
 ```shell
 composer require jampire/moonshine-impersonate
 ```
