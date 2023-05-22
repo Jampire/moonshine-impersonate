@@ -8,9 +8,11 @@ We accept contributions via Pull Requests on [Github][1].
 
 - **[PSR-12 Coding Standard][2]** - We use [Laravel Pint][3] with `psr12` preset to apply the conventions.
 
-- **Analyse your code!** We use [PHPStan][5] with `level 8` to perform static analyse.
+- **Analyse your code** - We use [PHPStan][5] with `level 8` to perform static analyse.
 
-- **Add tests!** - Your patch won't be accepted if it doesn't have tests. We use [Pest][4] to write tests.
+- **Rector your code** - We use [Rector][6] to keep the code up-to-date.
+
+- **Add tests** - Your patch won't be accepted if it doesn't have tests. We use [Pest][4] to write tests.
 
 - **Document any change in behaviour** - Make sure the README and any other relevant documentation are kept up-to-date.
 
@@ -23,7 +25,7 @@ We accept contributions via Pull Requests on [Github][1].
 - **Send coherent history** - Make sure each individual commit in your pull request is meaningful.
 If you had to make multiple intermediate commits while developing, please squash them before submitting.
 
-- **Ensure jobs pass!** - Please run all jobs (see below) before submitting your pull request,
+- **Ensure jobs pass** - Please run all jobs (see below) before submitting your pull request,
 and make sure they pass. We won't accept a patch until all jobs pass.
 
 ## Jobs
@@ -58,6 +60,18 @@ composer analyse
 composer tests-coverage
 ```
 
+### Run Rector
+
+``` bash
+composer rector
+```
+
+### Run Rector Fix
+
+``` bash
+composer fix-rector
+```
+
 **Happy coding**!
 
 [1]: https://github.com/Jampire/moonshine-impersonate/pulls
@@ -65,3 +79,4 @@ composer tests-coverage
 [3]: https://github.com/laravel/pint
 [4]: https://pestphp.com/
 [5]: https://phpstan.org/
+[6]: https://getrector.com/

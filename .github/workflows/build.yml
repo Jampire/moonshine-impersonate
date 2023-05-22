@@ -62,3 +62,10 @@ jobs:
       cache_key: ${{ needs.env-setup.outputs.cache-key }}
       extensions: ${{ needs.env-setup.outputs.extensions }}
       min_coverage: 100
+
+  rector:
+    needs: [ env-setup ]
+    name: Code Rector
+    uses: jampire/.github/.github/workflows/_rector.yml@master
+    with:
+      cache_key: ${{ needs.env-setup.outputs.cache-key }}
