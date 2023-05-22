@@ -55,6 +55,6 @@ if (!function_exists('view_impersonate')) {
      */
     function view_impersonate(string $key, array|Arrayable $data = [], array $mergeData = []): View
     {
-        return view('impersonate::'.$key, $data, $mergeData); // TODO
+        return view(Settings::ALIAS.'::'.$key, $data, $mergeData);
     }
 }

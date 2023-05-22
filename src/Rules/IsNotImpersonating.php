@@ -7,6 +7,7 @@ namespace Jampire\MoonshineImpersonate\Rules;
 use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Jampire\MoonshineImpersonate\Services\ImpersonateManager;
+use Jampire\MoonshineImpersonate\Support\Settings;
 
 /**
  * Class IsNotImpersonating
@@ -20,7 +21,7 @@ class IsNotImpersonating implements ValidationRule
         $manager = app(ImpersonateManager::class);
 
         if ($manager->isImpersonating()) {
-            $fail('ms-impersonate::validation.enter.is_impersonating')->translate();
+            $fail(Settings::ALIAS.'::validation.enter.is_impersonating')->translate();
         }
     }
 }

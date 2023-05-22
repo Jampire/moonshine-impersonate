@@ -11,7 +11,7 @@ namespace Jampire\MoonshineImpersonate\Support;
  */
 class Settings
 {
-    public const ALIAS = 'ms-impersonate';
+    public const ALIAS = 'impersonate';
 
     /**
      * @return class-string
@@ -23,7 +23,7 @@ class Settings
 
     public static function key(): string
     {
-        return config('ms-impersonate.key');
+        return config_impersonate('key');
     }
 
     public static function defaultGuard(): string

@@ -7,6 +7,7 @@ namespace Jampire\MoonshineImpersonate\Rules;
 use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Jampire\MoonshineImpersonate\Services\ImpersonateManager;
+use Jampire\MoonshineImpersonate\Support\Settings;
 
 /**
  * Class CanBeImpersonated
@@ -21,7 +22,7 @@ class CanBeImpersonated implements ValidationRule
         $user = $manager->findUserById($value);
 
         if (!$manager->canBeImpersonated($user)) {
-            $fail('ms-impersonate::validation.enter.cannot_be_impersonated')->translate();
+            $fail(Settings::ALIAS.'::validation.enter.cannot_be_impersonated')->translate();
         }
     }
 }

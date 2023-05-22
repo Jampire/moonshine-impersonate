@@ -61,7 +61,7 @@ class ImpersonateServiceProvider extends ServiceProvider
     {
         app('router')->aliasMiddleware(Settings::ALIAS, ImpersonateMiddleware::class);
 
-        foreach (config('ms-impersonate.routes.middleware') as $group) {
+        foreach (config_impersonate('routes.middleware') as $group) {
             $kernel->appendMiddlewareToGroup($group, ImpersonateMiddleware::class);
         }
     }
@@ -97,17 +97,15 @@ class ImpersonateServiceProvider extends ServiceProvider
 
     private function registerViews(): void
     {
-        $prefix = 'impersonate'; // TODO: make all aliases as 'impersonate'
-
-        $this->loadViewComponentsAs($prefix, [
+        $this->loadViewComponentsAs(Settings::ALIAS, [
             'stop' => StopImpersonation::class,
         ]);
 
-        $this->loadViewsFrom(__DIR__.'/../resources/views', $prefix);
+        $this->loadViewsFrom(__DIR__.'/../resources/views', Settings::ALIAS);
 
-        if (config('ms-impersonate.buttons.stop.enabled') === true) {
+        if (config_impersonate('buttons.stop.enabled') === true) {
             config([
-                'moonshine.header' => $prefix . '::impersonate.buttons.stop',
+                'moonshine.header' => Settings::ALIAS . '::impersonate.buttons.stop',
             ]);
         }
 
