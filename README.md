@@ -1,5 +1,5 @@
 <p align="center">
-    <a href="https://github.com/Jampire/moonshine-impersonate/actions/workflows/build.yml" target="_blank" title="build"><img src="https://github.com/Jampire/moonshine-impersonate/actions/workflows/build.yml/badge.svg?branch=master" alt="build"></a>
+    <a href="https://github.com/Jampire/moonshine-impersonate/actions/workflows/build.yml" target="_blank" title="build"><img src="https://github.com/Jampire/moonshine-impersonate/actions/workflows/build.yml/badge.svg?branch=master&style=flat-square" alt="build"></a>
     <a href="https://github.com/Jampire/moonshine-impersonate" target="_blank" title="download"><img src="https://img.shields.io/packagist/dt/Jampire/moonshine-impersonate?style=flat-square" alt="downloads"></a>
     <a href="https://github.com/Jampire/moonshine-impersonate/blob/master/LICENSE" target="_blank" title="license"><img src="https://img.shields.io/github/license/Jampire/moonshine-impersonate?style=flat-square" alt="license"></a>
     <a href="https://github.com/Jampire/moonshine-impersonate/releases" target="_blank" title="release"><img src="https://img.shields.io/github/v/release/Jampire/moonshine-impersonate?display_name=tag&sort=semver&style=flat-square" alt="release"></a>
