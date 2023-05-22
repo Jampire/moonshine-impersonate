@@ -28,7 +28,7 @@ final class ImpersonateManager
             return $this->user;
         }
 
-        $userModel = Settings::userClass(); // TODO: if provider is 'database' ?
+        $userModel = Settings::userClass(); // TODO: implement 'database' provider
         $this->user = $userModel::query()->findOrFail($id);
 
         return $this->user;
