@@ -69,7 +69,6 @@
         "all": [
             "@composer validate --strict --ansi",
             "@style",
-            "@rector",
             "@analyse",
             "@tests-coverage"
         ]

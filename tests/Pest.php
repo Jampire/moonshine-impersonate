@@ -2,6 +2,9 @@
 
 declare(strict_types=1);
 
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
+use Jampire\MoonshineImpersonate\Support\Settings;
 use Jampire\MoonshineImpersonate\Tests\Stubs\Models\MoonshineUser;
 use Jampire\MoonshineImpersonate\Tests\Stubs\Models\User;
 use Jampire\MoonshineImpersonate\Tests\TestCase;
@@ -94,4 +97,19 @@ function setAuthConfig(): void
             'password_timeout' => 10800,
         ],
     ]);
+}
+
+function registerHomePage(): void
+{
+    Route::name('test.')
+        ->prefix('test')
+        ->middleware('web')
+        ->group(function (): void {
+            Route::get('/me', function (): string {
+                $user = Auth::guard(Settings::defaultGuard())->user()?->name;
+
+                return $user ?? 'Not authorized';
+            })
+                ->name('me');
+        });
 }
