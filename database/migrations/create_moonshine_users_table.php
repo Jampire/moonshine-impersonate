@@ -10,7 +10,7 @@ class CreateMoonShineUsersTable extends Migration
 {
     public function up(): void
     {
-        Schema::create('moonshine_users', function (Blueprint $table) {
+        Schema::create('moonshine_users', function (Blueprint $table): void {
             $table->id();
 
             $table->bigInteger('moonshine_user_role_id')
@@ -27,8 +27,6 @@ class CreateMoonShineUsersTable extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
     public function down(): void
     {

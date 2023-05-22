@@ -68,13 +68,12 @@ class ImpersonateServiceProvider extends ServiceProvider
 
     /**
      * @author lab404/laravel-impersonate
-     * @return void
      */
     private function registerAuthDriver(): void
     {
         $auth = app('auth');
 
-        $auth->extend('session', function (Application $app, $name, array $config) use ($auth) {
+        $auth->extend('session', function (Application $app, $name, array $config) use ($auth): SessionGuard {
             $provider = $auth->createUserProvider($config['provider']);
 
             $guard = new SessionGuard($name, $provider, $app['session.store']);

@@ -12,12 +12,12 @@ use function Pest\Laravel\actingAs;
 use function Pest\Laravel\get;
 use function Pest\Laravel\post;
 
-beforeEach(function () {
+beforeEach(function (): void {
     setAuthConfig();
     enableMoonShineGuard();
 });
 
-test('privileged user can stop impersonation', function () {
+test('privileged user can stop impersonation', function (): void {
     Event::fake();
     $user = User::factory()->create();
     $moonShineUser = MoonshineUser::factory()->create();
@@ -47,25 +47,25 @@ test('privileged user can stop impersonation', function () {
     ;
 
     Event::assertDispatched(
-        fn (ImpersonationStopped $event) =>
+        fn (ImpersonationStopped $event): bool =>
             $event->impersonator->getAuthIdentifier() === $moonShineUser->id &&
             $event->impersonated->getAuthIdentifier() === $user->id
     );
 });
 
-test('unauthorized user cannot stop impersonation', function () {
+test('unauthorized user cannot stop impersonation', function (): void {
     get(route_impersonate('stop'))
         ->assertForbidden();
 });
 
-test('regular user cannot stop impersonation', function () {
+test('regular user cannot stop impersonation', function (): void {
     actingAs(User::factory()->create(), 'web');
 
     get(route_impersonate('stop'))
         ->assertForbidden();
 });
 
-it('cannot stop impersonation if impersonation mode is not enabled', function () {
+it('cannot stop impersonation if impersonation mode is not enabled', function (): void {
     $moonShineUser = MoonshineUser::factory()->create();
 
     actingAs($moonShineUser, Settings::moonShineGuard());

@@ -21,7 +21,7 @@ class StopFormRequest extends FormRequest
 
     public function withValidator(Validator $validator): void
     {
-        $validator->after(function (Validator $validator) {
+        $validator->after(function (Validator $validator): void {
             if (!app(ImpersonateManager::class)->isImpersonating()) {
                 $validator->errors()->add(
                     Settings::key(),

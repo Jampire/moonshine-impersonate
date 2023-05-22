@@ -24,7 +24,7 @@ final class ImpersonateManager
 
     public function findUserById(int $id): Authenticatable
     {
-        if ($this->user !== null && $this->user->getAuthIdentifier() === $id) {
+        if ($this->user instanceof Authenticatable && $this->user->getAuthIdentifier() === $id) {
             return $this->user;
         }
 
@@ -59,7 +59,7 @@ final class ImpersonateManager
         }
         // @codeCoverageIgnoreEnd
 
-        return ! (!$this->canBeImpersonated($userToImpersonate));
+        return $this->canBeImpersonated($userToImpersonate);
     }
 
     public function canStop(): bool
@@ -68,7 +68,7 @@ final class ImpersonateManager
             return false;
         }
 
-        return ! (!$this->canImpersonate());
+        return $this->canImpersonate();
     }
 
     public function isImpersonating(): bool

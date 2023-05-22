@@ -11,7 +11,7 @@ use MoonShine\ItemActions\ItemAction;
 
 use function Pest\Laravel\actingAs;
 
-it('resolves correct item action class', function () {
+it('resolves correct item action class', function (): void {
     $user = User::factory()->create();
     $moonShineUser = MoonshineUser::factory()->create();
     actingAs($moonShineUser, Settings::moonShineGuard());
@@ -33,7 +33,7 @@ it('resolves correct item action class', function () {
     ;
 });
 
-it('can show item action in in-line mode', function () {
+it('can show item action in in-line mode', function (): void {
     $moonShineUser = MoonshineUser::factory()->create();
     actingAs($moonShineUser, Settings::moonShineGuard());
 
@@ -44,7 +44,7 @@ it('can show item action in in-line mode', function () {
     ;
 });
 
-it('can show confirmation dialog for this item action', function () {
+it('can show confirmation dialog for this item action', function (): void {
     $moonShineUser = MoonshineUser::factory()->create();
     actingAs($moonShineUser, Settings::moonShineGuard());
 

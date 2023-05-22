@@ -6,7 +6,7 @@ use Jampire\MoonshineImpersonate\UI\View\Components\StopImpersonation;
 
 use function Pest\Laravel\actingAs;
 
-it('correctly renders stop button with defaults', function () {
+it('correctly renders stop button with defaults', function (): void {
     $view = $this->component(StopImpersonation::class);
 
     $view
@@ -15,7 +15,7 @@ it('correctly renders stop button with defaults', function () {
         ->assertSee(config_impersonate('buttons.stop.class'));
 });
 
-it('correctly renders stop button', function () {
+it('correctly renders stop button', function (): void {
     $view = $this->component(StopImpersonation::class, [
         'label' => 'Label',
         'class' => 'btn-red',
@@ -27,7 +27,7 @@ it('correctly renders stop button', function () {
         ->assertSee('btn-red');
 });
 
-it('renders stop button with permission', function () {
+it('renders stop button with permission', function (): void {
     $moonShineUser = MoonshineUser::factory()->create();
     actingAs($moonShineUser, Settings::moonShineGuard())
         ->withSession([config_impersonate('key') => 1]);
@@ -39,7 +39,7 @@ it('renders stop button with permission', function () {
     ;
 });
 
-it('does not render stop button when without permissions', function () {
+it('does not render stop button when without permissions', function (): void {
     $moonShineUser = MoonshineUser::factory()->create();
     actingAs($moonShineUser, Settings::moonShineGuard());
 

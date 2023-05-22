@@ -11,12 +11,12 @@ use Jampire\MoonshineImpersonate\Tests\Stubs\Models\User;
 
 use function Pest\Laravel\actingAs;
 
-beforeEach(function () {
+beforeEach(function (): void {
     setAuthConfig();
     enableMoonShineGuard();
 });
 
-it('cannot execute enter action if user does not found', function () {
+it('cannot execute enter action if user does not found', function (): void {
     $moonShineUser = MoonshineUser::factory()->create();
     actingAs($moonShineUser, Settings::moonShineGuard());
 
@@ -27,7 +27,7 @@ it('cannot execute enter action if user does not found', function () {
     ;
 });
 
-test('enter action validation works correctly', function () {
+test('enter action validation works correctly', function (): void {
     $user = User::factory()->create();
     $moonShineUser = MoonshineUser::factory()->create();
     actingAs($moonShineUser, Settings::moonShineGuard());

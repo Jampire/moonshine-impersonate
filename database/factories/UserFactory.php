@@ -18,11 +18,14 @@ class UserFactory extends TestbenchUserFactory
 {
     protected $model = User::class;
 
+    /**
+     * @return array{name: string, email: string, email_verified_at: \Illuminate\Support\Carbon, password: string, remember_token: string}
+     */
     public function definition(): array
     {
         return [
-            'name' => $this->faker->name(),
-            'email' => $this->faker->unique()->safeEmail(),
+            'name' => fake()->name(),
+            'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
             'password' => Hash::make('secret'),
             'remember_token' => Str::random(10),

@@ -11,12 +11,12 @@ use Jampire\MoonshineImpersonate\Tests\Stubs\Models\User;
 use function Pest\Laravel\actingAs;
 use function Pest\Laravel\post;
 
-beforeEach(function () {
+beforeEach(function (): void {
     setAuthConfig();
     enableMoonShineGuard();
 });
 
-test('privileged user can impersonate another user', function () {
+test('privileged user can impersonate another user', function (): void {
     Event::fake();
     $user = User::factory()->create([
         'name' => 'user',
@@ -46,13 +46,13 @@ test('privileged user can impersonate another user', function () {
     ;
 
     Event::assertDispatched(
-        fn (ImpersonationEntered $event) =>
+        fn (ImpersonationEntered $event): bool =>
             $event->impersonator->getAuthIdentifier() === $moonShineUser->id &&
             $event->impersonated->getAuthIdentifier() === $user->id
     );
 });
 
-test('unauthorized user cannot impersonate another user', function () {
+test('unauthorized user cannot impersonate another user', function (): void {
     $response = post(route_impersonate('enter'), [
         'id' => User::factory()->create()->id,
     ]);
@@ -64,7 +64,7 @@ test('unauthorized user cannot impersonate another user', function () {
     ;
 });
 
-test('regular user cannot impersonate another user', function () {
+test('regular user cannot impersonate another user', function (): void {
     $user = User::factory()->create();
 
     actingAs($user, 'web');
@@ -79,7 +79,7 @@ test('regular user cannot impersonate another user', function () {
     ;
 });
 
-it('cannot impersonate non-existent user', function () {
+it('cannot impersonate non-existent user', function (): void {
     $user = User::factory()->create();
     $moonShineUser = MoonshineUser::factory()->create();
 
@@ -95,7 +95,7 @@ it('cannot impersonate non-existent user', function () {
     ;
 });
 
-it('cannot impersonate if already in impersonation mode', function () {
+it('cannot impersonate if already in impersonation mode', function (): void {
     $user = User::factory()->create();
     $moonShineUser = MoonshineUser::factory()->create();
 

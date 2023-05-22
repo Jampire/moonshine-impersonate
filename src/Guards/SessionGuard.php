@@ -16,9 +16,6 @@ final class SessionGuard extends BaseSessionGuard
 {
     /**
      * Log a user into the application without firing the Login event.
-     *
-     * @param Authenticatable $user
-     * @return void
      */
     public function quietLogin(Authenticatable $user): void
     {
@@ -28,8 +25,6 @@ final class SessionGuard extends BaseSessionGuard
     /**
      * Logout the user without updating remember_token
      * and without firing the Logout event.
-     *
-     * @return  void
      */
     public function quietLogout(): void
     {
