@@ -22,8 +22,6 @@ return static function (RectorConfig $rectorConfig): void {
         SetList::CODE_QUALITY,
         SetList::DEAD_CODE,
         SetList::TYPE_DECLARATION,
-//            SetList::EARLY_RETURN,
-//            SetList::PSR_4,
         LaravelLevelSetList::UP_TO_LARAVEL_100,
     ]);
 };
