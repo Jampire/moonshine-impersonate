@@ -11,7 +11,7 @@ namespace Jampire\MoonshineImpersonate\Support;
  */
 class Settings
 {
-    public const ALIAS = 'impersonate';
+    final public const ALIAS = 'impersonate';
 
     /**
      * @return class-string

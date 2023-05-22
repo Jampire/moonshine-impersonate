@@ -18,12 +18,15 @@ class MoonshineUserFactory extends Factory
 {
     protected $model = MoonshineUser::class;
 
+    /**
+     * @return array{moonshine_user_role_id: int, name: string, email: string, password: string, remember_token: string}
+     */
     public function definition(): array
     {
         return [
             'moonshine_user_role_id' => 1,
-            'name' => $this->faker->name(),
-            'email' => $this->faker->unique()->safeEmail(),
+            'name' => fake()->name(),
+            'email' => fake()->unique()->safeEmail(),
             'password' => Hash::make('secret'),
             'remember_token' => Str::random(10),
         ];

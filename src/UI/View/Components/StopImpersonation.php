@@ -29,10 +29,10 @@ class StopImpersonation extends Component
         string $icon = null,
         string $class = null,
     ) {
-        $this->route = $route === null ? route_impersonate('stop') : $route;
-        $this->label = $label === null ? trans_impersonate('ui.buttons.stop.label') : $label;
-        $this->icon = $icon === null ? config_impersonate('buttons.stop.icon') : $icon;
-        $this->class = $class === null ? config_impersonate('buttons.stop.class') : $class;
+        $this->route = $route ?? route_impersonate('stop');
+        $this->label = $label ?? trans_impersonate('ui.buttons.stop.label');
+        $this->icon = $icon ?? config_impersonate('buttons.stop.icon');
+        $this->class = $class ?? config_impersonate('buttons.stop.class');
     }
 
     public function render(): View

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Jampire\MoonshineImpersonate\Actions;
 
+use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Support\Facades\Auth;
 use Jampire\MoonshineImpersonate\Events\ImpersonationStopped;
 use Jampire\MoonshineImpersonate\Services\ImpersonateManager;
@@ -25,7 +26,7 @@ final readonly class StopAction
     public function execute(): bool
     {
         $user = $this->manager->getUserFromSession();
-        if ($user === null) {
+        if (!$user instanceof Authenticatable) {
             return false;
         }
 

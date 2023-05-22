@@ -8,8 +8,6 @@ if (!function_exists('route_impersonate')) {
     /**
      * @param string $routeName Route name without prefix
      * @param mixed[] $parameters
-     * @param bool $absolute
-     * @return string
      * @author Dzianis Kotau <me@dzianiskotau.com>
      */
     function route_impersonate(string $routeName, array $parameters = [], bool $absolute = true): string
@@ -21,8 +19,6 @@ if (!function_exists('route_impersonate')) {
 if (!function_exists('config_impersonate')) {
     /**
      * @param string $key Config key without prefix
-     * @param mixed $default
-     * @return mixed
      * @author Dzianis Kotau <me@dzianiskotau.com>
      */
     function config_impersonate(string $key, mixed $default = null): mixed
@@ -36,7 +32,6 @@ if (!function_exists('trans_impersonate')) {
      * @param string $key Translation key without namespace
      * @param mixed[] $replace
      * @param string|null $locale
-     * @return string
      * @author Dzianis Kotau <me@dzianiskotau.com>
      */
     function trans_impersonate(string $key, array $replace = [], string $locale = null): string
@@ -50,7 +45,6 @@ if (!function_exists('view_impersonate')) {
      * @param string $key Translation key without namespace
      * @param mixed[]|Arrayable $data
      * @param mixed[] $mergeData
-     * @return View
      * @author Dzianis Kotau <me@dzianiskotau.com>
      */
     function view_impersonate(string $key, array|Arrayable $data = [], array $mergeData = []): View

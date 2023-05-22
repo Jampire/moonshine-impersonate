@@ -22,8 +22,6 @@ final readonly class EnterAction
 
     /**
      * @param int $id ID of the impersonated user
-     * @param bool $shouldValidate
-     * @return bool
      */
     public function execute(int $id, bool $shouldValidate = false): bool
     {

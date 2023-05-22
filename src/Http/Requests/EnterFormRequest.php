@@ -22,7 +22,7 @@ class EnterFormRequest extends FormRequest
     protected $stopOnFirstFailure = true;
 
     /**
-     * @return array<string, mixed>
+     * @return array{id: IsNotImpersonating[]|CanImpersonate[]|CanBeImpersonated[]|string[]}
      */
     public function rules(): array
     {
@@ -40,7 +40,7 @@ class EnterFormRequest extends FormRequest
     }
 
     /**
-     * @return string[]
+     * @return array{id: string}
      */
     public function attributes(): array
     {
