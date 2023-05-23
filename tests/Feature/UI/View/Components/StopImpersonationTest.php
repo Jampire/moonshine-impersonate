@@ -39,7 +39,7 @@ it('renders stop button with permission', function (): void {
     ;
 });
 
-it('does not render stop button when without permissions', function (): void {
+it('does not render stop button without permissions', function (): void {
     $moonShineUser = MoonshineUser::factory()->create();
     actingAs($moonShineUser, Settings::moonShineGuard());
 
