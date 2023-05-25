@@ -25,9 +25,6 @@ class CreateMoonShineUsersTable extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('moonshine_users');

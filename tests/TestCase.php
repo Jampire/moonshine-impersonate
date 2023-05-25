@@ -7,6 +7,7 @@ namespace Jampire\MoonshineImpersonate\Tests;
 use Illuminate\Foundation\Testing\Concerns\InteractsWithViews;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Jampire\MoonshineImpersonate\ImpersonateServiceProvider;
+use Jampire\MoonshineImpersonate\Tests\Stubs\Models\User;
 use Orchestra\Testbench\TestCase as BaseTestCase;
 
 abstract class TestCase extends BaseTestCase
@@ -20,6 +21,8 @@ abstract class TestCase extends BaseTestCase
 
         $this->loadLaravelMigrations(['--database' => 'testing']);
         $this->artisan('migrate', ['--database' => 'testing'])->run();
+
+        config(['auth.providers.users.model' => User::class]);
     }
 
     protected function getPackageProviders($app): array
@@ -32,7 +35,9 @@ abstract class TestCase extends BaseTestCase
     protected function getEnvironmentSetUp($app): void
     {
         include_once __DIR__.'/../database/migrations/create_moonshine_users_table.php';
+        include_once __DIR__.'/../database/migrations/create_moonshine_change_logs_table.php';
 
         (new \CreateMoonShineUsersTable())->up();
+        (new \CreateMoonShineChangeLogsTable())->up();
     }
 }
