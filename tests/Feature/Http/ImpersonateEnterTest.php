@@ -18,6 +18,7 @@ beforeEach(function (): void {
 
 test('privileged user can impersonate another user', function (): void {
     Event::fake();
+
     $user = User::factory()->create([
         'name' => 'user',
     ]);

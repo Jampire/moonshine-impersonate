@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Illuminate\Foundation\Auth\User as AuthUser;
 use Jampire\MoonshineImpersonate\Support\Settings;
 use Jampire\MoonshineImpersonate\Tests\Stubs\Models\MoonshineUser;
 use Jampire\MoonshineImpersonate\Tests\Stubs\Models\User;
@@ -12,6 +13,9 @@ use MoonShine\ItemActions\ItemAction;
 use function Pest\Laravel\actingAs;
 
 it('resolves correct item action class', function (): void {
+    // don't need to use User model here
+    config(['auth.providers.users.model' => AuthUser::class]);
+
     $user = User::factory()->create();
     $moonShineUser = MoonshineUser::factory()->create();
     actingAs($moonShineUser, Settings::moonShineGuard());

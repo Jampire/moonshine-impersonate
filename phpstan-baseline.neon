@@ -24,3 +24,13 @@ parameters:
 			message: "#^Parameter \\#2 \\$provider of class Jampire\\\\MoonshineImpersonate\\\\Guards\\\\SessionGuard constructor expects Illuminate\\\\Contracts\\\\Auth\\\\UserProvider, Illuminate\\\\Contracts\\\\Auth\\\\UserProvider\\|null given\\.$#"
 			count: 1
 			path: src/ImpersonateServiceProvider.php
+
+		-
+			message: "#^Call to an undefined method Illuminate\\\\Contracts\\\\Auth\\\\Authenticatable\\:\\:changeLogs\\(\\)\\.$#"
+			count: 1
+			path: src/Listeners/LogImpersonationEnter.php
+
+		-
+			message: "#^Call to an undefined method Illuminate\\\\Contracts\\\\Auth\\\\Authenticatable\\:\\:changeLogs\\(\\)\\.$#"
+			count: 1
+			path: src/Listeners/LogImpersonationStopped.php

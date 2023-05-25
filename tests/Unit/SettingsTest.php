@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-use Illuminate\Foundation\Auth\User;
 use Jampire\MoonshineImpersonate\Support\Settings;
+use Jampire\MoonshineImpersonate\Tests\Stubs\Models\User;
 
 it('uses correct User model', function (): void {
     expect(Settings::userClass())

@@ -11,6 +11,7 @@ use Jampire\MoonshineImpersonate\Actions\EnterAction;
 use Jampire\MoonshineImpersonate\Actions\StopAction;
 use Jampire\MoonshineImpersonate\Guards\SessionGuard;
 use Jampire\MoonshineImpersonate\Http\Middleware\ImpersonateMiddleware;
+use Jampire\MoonshineImpersonate\Providers\EventServiceProvider;
 use Jampire\MoonshineImpersonate\Services\ImpersonateManager;
 use Jampire\MoonshineImpersonate\Support\Settings;
 use Jampire\MoonshineImpersonate\UI\View\Components\StopImpersonation;
@@ -38,6 +39,8 @@ class ImpersonateServiceProvider extends ServiceProvider
             StopAction::class,
             fn (): StopAction => new StopAction(app(ImpersonateManager::class))
         );
+
+        $this->app->register(EventServiceProvider::class);
 
         $this->mergeConfigFrom(__DIR__.'/../config/'.Settings::ALIAS.'.php', Settings::ALIAS);
 

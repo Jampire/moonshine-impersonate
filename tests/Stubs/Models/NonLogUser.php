@@ -6,23 +6,21 @@ namespace Jampire\MoonshineImpersonate\Tests\Stubs\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as BaseUser;
-use Jampire\MoonshineImpersonate\Database\Factories\UserFactory;
-use MoonShine\Traits\Models\HasMoonShineChangeLog;
+use Jampire\MoonshineImpersonate\Database\Factories\NonLogUserFactory;
 
 /**
- * Class User
+ * Class NonLogUser
  *
  * @author Dzianis Kotau <me@dzianiskotau.com>
  */
-class User extends BaseUser
+class NonLogUser extends BaseUser
 {
     use HasFactory;
-    use HasMoonShineChangeLog;
 
     protected $table = 'users';
 
-    protected static function newFactory(): UserFactory
+    protected static function newFactory(): NonLogUserFactory
     {
-        return UserFactory::new();
+        return NonLogUserFactory::new();
     }
 }

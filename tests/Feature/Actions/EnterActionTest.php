@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\Event;
 use Jampire\MoonshineImpersonate\Actions\EnterAction;
 use Jampire\MoonshineImpersonate\Support\Settings;
 use Jampire\MoonshineImpersonate\Tests\Stubs\Models\MoonshineUser;
@@ -28,6 +29,8 @@ it('cannot execute enter action if user does not found', function (): void {
 });
 
 test('enter action validation works correctly', function (): void {
+    Event::fake();
+
     $user = User::factory()->create();
     $moonShineUser = MoonshineUser::factory()->create();
     actingAs($moonShineUser, Settings::moonShineGuard());
