@@ -34,8 +34,8 @@ abstract class TestCase extends BaseTestCase
 
     protected function getEnvironmentSetUp($app): void
     {
-        include_once __DIR__.'/../database/migrations/create_moonshine_users_table.php';
-        include_once __DIR__.'/../database/migrations/create_moonshine_change_logs_table.php';
+        include_once __DIR__.'/Stubs/Database/Migrations/create_moonshine_users_table.php';
+        include_once __DIR__.'/Stubs/Database/Migrations/create_moonshine_change_logs_table.php';
 
         (new \CreateMoonShineUsersTable())->up();
         (new \CreateMoonShineChangeLogsTable())->up();

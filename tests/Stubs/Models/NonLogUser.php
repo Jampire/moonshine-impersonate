@@ -6,7 +6,7 @@ namespace Jampire\MoonshineImpersonate\Tests\Stubs\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as BaseUser;
-use Jampire\MoonshineImpersonate\Database\Factories\NonLogUserFactory;
+use Jampire\MoonshineImpersonate\Tests\Stubs\Database\Factories\NonLogUserFactory;
 
 /**
  * Class NonLogUser

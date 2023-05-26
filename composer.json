@@ -48,8 +48,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Jampire\\MoonshineImpersonate\\Tests\\": "tests/",
-            "Jampire\\MoonshineImpersonate\\Database\\Factories\\": "database/factories"
+            "Jampire\\MoonshineImpersonate\\Tests\\": "tests/"
         }
     },
     "conflict": {

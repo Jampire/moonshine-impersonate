@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Jampire\MoonshineImpersonate\Tests\Stubs\Models;
 
-use Jampire\MoonshineImpersonate\Database\Factories\MoonshineUserFactory;
+use Jampire\MoonshineImpersonate\Tests\Stubs\Database\Factories\MoonshineUserFactory;
 use MoonShine\Models\MoonshineUser as BaseUser;
 
 /**
