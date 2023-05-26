@@ -1,4 +1,3 @@
 - implement impersonation permission
 - implement which users are allowed to be impersonated
-- log of user switching
 - implement `database` provider

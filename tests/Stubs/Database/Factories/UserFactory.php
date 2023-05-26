@@ -2,21 +2,21 @@
 
 declare(strict_types=1);
 
-namespace Jampire\MoonshineImpersonate\Database\Factories;
+namespace Jampire\MoonshineImpersonate\Tests\Stubs\Database\Factories;
 
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
-use Jampire\MoonshineImpersonate\Tests\Stubs\Models\NonLogUser;
+use Jampire\MoonshineImpersonate\Tests\Stubs\Models\User;
 use Orchestra\Testbench\Factories\UserFactory as TestbenchUserFactory;
 
 /**
- * Class NonLogUserFactory
+ * Class UserFactory
  *
  * @author Dzianis Kotau <me@dzianiskotau.com>
  */
-class NonLogUserFactory extends TestbenchUserFactory
+class UserFactory extends TestbenchUserFactory
 {
-    protected $model = NonLogUser::class;
+    protected $model = User::class;
 
     /**
      * @return array{name: string, email: string, email_verified_at: \Illuminate\Support\Carbon, password: string, remember_token: string}

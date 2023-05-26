@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Jampire\MoonshineImpersonate\Database\Factories;
+namespace Jampire\MoonshineImpersonate\Tests\Stubs\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
