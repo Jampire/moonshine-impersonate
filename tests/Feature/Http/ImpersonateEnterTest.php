@@ -111,3 +111,39 @@ it('cannot impersonate if already in impersonation mode', function (): void {
         'id' => trans_impersonate('validation.enter.is_impersonating'),
     ]);
 });
+
+it('cannot impersonate non-impersonated user', function (): void {
+    $user = User::factory()->notImpersonated()->create();
+    $moonShineUser = MoonshineUser::factory()->create();
+
+    actingAs($moonShineUser, Settings::moonShineGuard());
+    $response = post(route_impersonate('enter'), [
+        'id' => $user->id,
+    ]);
+
+    $response->assertSessionHasErrors([
+        'id' => trans_impersonate('validation.enter.cannot_be_impersonated'),
+    ]);
+
+    expect(session()->get(config_impersonate('key')))
+        ->toBeEmpty()
+    ;
+});
+
+test('admin cannot impersonate with no permissions', function (): void {
+    $user = User::factory()->create();
+    $moonShineUser = MoonshineUser::factory()->cannotImpersonate()->create();
+
+    actingAs($moonShineUser, Settings::moonShineGuard());
+    $response = post(route_impersonate('enter'), [
+        'id' => $user->id,
+    ]);
+
+    $response->assertSessionHasErrors([
+        'id' => trans_impersonate('validation.enter.cannot_impersonate'),
+    ]);
+
+    expect(session()->get(config_impersonate('key')))
+        ->toBeEmpty()
+    ;
+});

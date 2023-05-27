@@ -31,4 +31,11 @@ class UserFactory extends TestbenchUserFactory
             'remember_token' => Str::random(10),
         ];
     }
+
+    public function notImpersonated(): self
+    {
+        return $this->state(fn (): array => [
+            'name' => fake()->name().' - Non-Impersonable',
+        ]);
+    }
 }
