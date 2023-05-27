@@ -1,5 +1,15 @@
 # Release Notes for 1.x
 
+## [1.2.0 (2023-05-27)](https://github.com/Jampire/moonshine-impersonate/compare/v1.1.1...v1.2.0)
+
+### Adds
+
+- Permissions implementation ([#16](https://github.com/Jampire/moonshine-impersonate/pull/16))
+
+### Fixes
+
+- Move stubs to its folders ([#15](https://github.com/Jampire/moonshine-impersonate/pull/15))
+
 ## [v1.1.1 (2023-05-26)](https://github.com/Jampire/moonshine-impersonate/compare/v1.1.0...v1.1.1)
 
 ### Adds

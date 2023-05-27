@@ -1,3 +1,1 @@
-- implement impersonation permission
-- implement which users are allowed to be impersonated
 - implement `database` provider
