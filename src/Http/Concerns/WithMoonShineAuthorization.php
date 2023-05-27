@@ -15,6 +15,6 @@ trait WithMoonShineAuthorization
 {
     public function authorize(): bool
     {
-        return MoonShineAuth::guard()->check(); // TODO: check 'impersonate' permission as well
+        return MoonShineAuth::guard()->check();
     }
 }

@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Jampire\MoonshineImpersonate\Services;
 
 use Illuminate\Contracts\Auth\Authenticatable;
+use Jampire\MoonshineImpersonate\Services\Contracts\BeImpersonable;
+use Jampire\MoonshineImpersonate\Services\Contracts\Impersonable;
 use Jampire\MoonshineImpersonate\Support\Settings;
 
 /**
@@ -53,11 +55,9 @@ final class ImpersonateManager
             return false;
         }
 
-        // @codeCoverageIgnoreStart
         if (!$this->canImpersonate()) {
             return false;
         }
-        // @codeCoverageIgnoreEnd
 
         return $this->canBeImpersonated($userToImpersonate);
     }
@@ -78,16 +78,12 @@ final class ImpersonateManager
 
     public function canImpersonate(): bool
     {
-        // TODO: implement Permission::IMPERSONATE permission
-
-        return true;
+        return !$this->moonshineUser instanceof Impersonable || $this->moonshineUser->canImpersonate();
     }
 
     public function canBeImpersonated(Authenticatable $userToImpersonate): bool
     {
-        // TODO: implement which users are allowed to be impersonated
-
-        return $userToImpersonate->getAuthIdentifier() > 0;
+        return !$userToImpersonate instanceof BeImpersonable || $userToImpersonate->canBeImpersonated();
     }
 
     public function saveAuthInSession(Authenticatable $user): void
