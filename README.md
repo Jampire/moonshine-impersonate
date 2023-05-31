@@ -17,6 +17,13 @@ Administrators to access and operate as if they were logged in as that User. Thi
 for example, when you get a bug report or an issue and want to see exactly what the user sees, impersonating them
 saves lots of time because you can see exactly what they see.
 
+## Compatibility
+
+|        MoonShine         |  MoonShine Impersonate  |
+|:------------------------:|:-----------------------:|
+| \>= v1.52 and <= v1.57.4 |        <= v1.2.0        |
+|        >= v1.58.0        |        >= v1.3.0        |
+
 ## Installation
 
 Use `composer` to install `MoonShine Impersonate` package:

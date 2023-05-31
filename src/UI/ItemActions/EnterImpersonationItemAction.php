@@ -6,7 +6,7 @@ namespace Jampire\MoonshineImpersonate\UI\ItemActions;
 
 use Illuminate\Contracts\Auth\Authenticatable;
 use Jampire\MoonshineImpersonate\Actions\EnterAction;
-use MoonShine\Contracts\Actions\ItemActionContact;
+use MoonShine\Contracts\Actions\ItemActionContract;
 use MoonShine\ItemActions\ItemAction;
 use MoonShine\Traits\Makeable;
 
@@ -15,7 +15,7 @@ use MoonShine\Traits\Makeable;
  *
  * @author Dzianis Kotau <me@dzianiskotau.com>
  */
-final class EnterImpersonationItemAction implements ItemActionContact
+final class EnterImpersonationItemAction implements ItemActionContract
 {
     use Makeable;
 
