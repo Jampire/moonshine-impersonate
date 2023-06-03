@@ -50,7 +50,6 @@ jobs:
     uses: jampire/.github/.github/workflows/_code_style.yml@php_matrix
     with:
       cache_key: ${{ needs.env-setup.outputs.cache-key }}
-      php_versions: ${{ needs.env-setup.outputs.php-version }}
 
   code-analyse:
       needs: [ env-setup ]
@@ -68,7 +67,6 @@ jobs:
       cache_key: ${{ needs.env-setup.outputs.cache-key }}
       extensions: ${{ needs.env-setup.outputs.extensions }}
       min_coverage: 100
-      php_versions: ${{ needs.env-setup.outputs.php-versions }}
 
   rector:
     needs: [ env-setup ]
@@ -76,4 +74,3 @@ jobs:
     uses: jampire/.github/.github/workflows/_rector.yml@php_matrix
     with:
       cache_key: ${{ needs.env-setup.outputs.cache-key }}
-      php_versions: ${{ needs.env-setup.outputs.php-version }}
