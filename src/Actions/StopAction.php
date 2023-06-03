@@ -15,10 +15,10 @@ use Jampire\MoonshineImpersonate\Support\Settings;
  *
  * @author Dzianis Kotau <me@dzianiskotau.com>
  */
-final readonly class StopAction
+final class StopAction
 {
     public function __construct(
-        private ImpersonateManager $manager
+        private readonly ImpersonateManager $manager
     ) {
         //
     }

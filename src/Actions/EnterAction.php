@@ -12,10 +12,10 @@ use Jampire\MoonshineImpersonate\Services\ImpersonateManager;
  *
  * @author Dzianis Kotau <me@dzianiskotau.com>
  */
-final readonly class EnterAction
+final class EnterAction
 {
     public function __construct(
-        public ImpersonateManager $manager
+        public readonly ImpersonateManager $manager
     ) {
         //
     }
