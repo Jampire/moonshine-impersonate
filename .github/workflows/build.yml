@@ -38,7 +38,6 @@ jobs:
       - name: Set variables
         id: set-variables
         run: |
-          echo "::set-output name=cache-key::${{ env.cache_key }}"
           echo "cache-key=${{ env.cache_key }}" >> "$GITHUB_OUTPUT"
           echo "::set-output name=extensions::${{ env.extensions }}"
           echo "::set-output name=tools::${{ env.tools }}"
