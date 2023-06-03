@@ -56,14 +56,15 @@ jobs:
       name: Code Analyse
       uses: jampire/.github/.github/workflows/_code_analyse.yml@php_matrix
       with:
-          cache_key: ${{ needs.env-setup.outputs.cache-key }}
-          php_versions: ${{ needs.env-setup.outputs.php-version }}
+        php_versions: ${{ needs.env-setup.outputs.php-version }}
+        cache_key: ${{ needs.env-setup.outputs.cache-key }}
 
   tests:
     needs: [ env-setup ]
     name: Tests
     uses: jampire/.github/.github/workflows/_tests.yml@php_matrix
     with:
+      php_versions: ${{ needs.env-setup.outputs.php-versions }}
       cache_key: ${{ needs.env-setup.outputs.cache-key }}
       extensions: ${{ needs.env-setup.outputs.extensions }}
       min_coverage: 100
