@@ -49,6 +49,7 @@ jobs:
     name: Code Style
     uses: jampire/.github/.github/workflows/_code_style.yml@php_matrix
     with:
+      php_versions: ${{ needs.env-setup.outputs.php-version }}
       cache_key: ${{ needs.env-setup.outputs.cache-key }}
 
   code-analyse:
@@ -74,4 +75,5 @@ jobs:
     name: Code Rector
     uses: jampire/.github/.github/workflows/_rector.yml@php_matrix
     with:
+      php_versions: ${{ needs.env-setup.outputs.php-version }}
       cache_key: ${{ needs.env-setup.outputs.cache-key }}
