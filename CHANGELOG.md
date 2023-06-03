@@ -1,5 +1,11 @@
 # Release Notes for 1.x
 
+## [1.4.0 (2023-06-03)](https://github.com/Jampire/moonshine-impersonate/compare/v1.3.0...v1.4.0)
+
+### Adds
+
+- Enabled PHP 8.1 support ([#22](https://github.com/Jampire/moonshine-impersonate/pull/22))
+
 ## [1.3.0 (2023-06-01)](https://github.com/Jampire/moonshine-impersonate/compare/v1.2.0...v1.3.0)
 
 ### Fixes
