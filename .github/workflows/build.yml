@@ -41,39 +41,39 @@ jobs:
           echo "::set-output name=cache-key::${{ env.cache_key }}"
           echo "::set-output name=extensions::${{ env.extensions }}"
           echo "::set-output name=tools::${{ env.tools }}"
-          echo '::set-output name=php_versions::["8.1", "8.2"]'
-          echo '::set-output name=php_version::["8.1"]'
+          echo "::set-output name=php_versions::['8.1', '8.2']"
+          echo "::set-output name=php_version::['8.1']"
 
   code-style:
     needs: [ env-setup ]
     name: Code Style
-    uses: jampire/.github/.github/workflows/_code_style.yml@php_matrix
+    uses: jampire/.github/.github/workflows/_code_style.yml@master
     with:
-      cache_key: ${{ needs.env-setup.outputs.cache-key }}
       php_versions: ${{ needs.env-setup.outputs.php-version }}
+      cache_key: ${{ needs.env-setup.outputs.cache-key }}
 
   code-analyse:
       needs: [ env-setup ]
       name: Code Analyse
-      uses: jampire/.github/.github/workflows/_code_analyse.yml@php_matrix
+      uses: jampire/.github/.github/workflows/_code_analyse.yml@master
       with:
-          cache_key: ${{ needs.env-setup.outputs.cache-key }}
-          php_versions: ${{ needs.env-setup.outputs.php-version }}
+        php_versions: ${{ needs.env-setup.outputs.php-version }}
+        cache_key: ${{ needs.env-setup.outputs.cache-key }}
 
   tests:
     needs: [ env-setup ]
     name: Tests
-    uses: jampire/.github/.github/workflows/_tests.yml@php_matrix
+    uses: jampire/.github/.github/workflows/_tests.yml@master
     with:
+      php_versions: ${{ needs.env-setup.outputs.php-versions }}
       cache_key: ${{ needs.env-setup.outputs.cache-key }}
       extensions: ${{ needs.env-setup.outputs.extensions }}
       min_coverage: 100
-      php_versions: ${{ needs.env-setup.outputs.php-versions }}
 
   rector:
     needs: [ env-setup ]
     name: Code Rector
-    uses: jampire/.github/.github/workflows/_rector.yml@php_matrix
+    uses: jampire/.github/.github/workflows/_rector.yml@master
     with:
-      cache_key: ${{ needs.env-setup.outputs.cache-key }}
       php_versions: ${{ needs.env-setup.outputs.php-version }}
+      cache_key: ${{ needs.env-setup.outputs.cache-key }}
