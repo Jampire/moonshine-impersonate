@@ -39,10 +39,10 @@ jobs:
         id: set-variables
         run: |
           echo "cache-key=${{ env.cache_key }}" >> "$GITHUB_OUTPUT"
-          echo "::set-output name=extensions::${{ env.extensions }}"
-          echo "::set-output name=tools::${{ env.tools }}"
-          echo "::set-output name=php_versions::['8.1', '8.2']"
-          echo "::set-output name=php_version::['8.1']"
+          echo "extensions=${{ env.extensions }}" >> "$GITHUB_OUTPUT"
+          echo "tools=${{ env.tools }}" >> "$GITHUB_OUTPUT"
+          echo "php_versions=${{ ['8.1', '8.2'] }}" >> "$GITHUB_OUTPUT"
+          echo "php_version=${{ ['8.1'] }}" >> "$GITHUB_OUTPUT"
 
   code-style:
     needs: [ env-setup ]
