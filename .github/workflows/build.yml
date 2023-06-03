@@ -41,8 +41,8 @@ jobs:
           echo "::set-output name=cache-key::${{ env.cache_key }}"
           echo "::set-output name=extensions::${{ env.extensions }}"
           echo "::set-output name=tools::${{ env.tools }}"
-          echo '::set-output name=php_versions::["8.1", "8.2"]'
-          echo '::set-output name=php_version::["8.1"]'
+          echo "::set-output name=php_versions::['8.1', '8.2']"
+          echo "::set-output name=php_version::['8.1']"
 
   code-style:
     needs: [ env-setup ]
