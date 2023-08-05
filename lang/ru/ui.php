@@ -11,11 +11,15 @@ return [
             'message' => 'Подмена пользователя была успешно остановлена!',
         ],
     ],
-    'resource' => [
+    'resources' => [
         'impersonate' => [
             'title' => 'Подмена пользователя',
         ],
-        'users' => [
+//        'users' => [
+//            'title' => 'Пользователи',
+//        ],
+    // TODO
+        'impersonated' => [
             'title' => 'Пользователи',
         ],
     ],

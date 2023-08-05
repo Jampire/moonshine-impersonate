@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Jampire\MoonshineImpersonate\Support;
 
+use MoonShine\Traits\Models\HasMoonShineChangeLog;
+
 /**
  * Class Settings
  *
@@ -51,5 +53,14 @@ class Settings
     public static function impersonatorSessionGuardKey(): string
     {
         return 'impersonator-guard';
+    }
+
+    public static function isImpersonationLoggable(): bool
+    {
+        return in_array(
+            HasMoonShineChangeLog::class,
+            class_uses_recursive(self::userClass()),
+            true
+        );
     }
 }

@@ -6,6 +6,7 @@ namespace Jampire\MoonshineImpersonate;
 
 use Illuminate\Contracts\Http\Kernel;
 use Illuminate\Foundation\Application;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\ServiceProvider;
 use Jampire\MoonshineImpersonate\Actions\EnterAction;
 use Jampire\MoonshineImpersonate\Actions\StopAction;
@@ -14,7 +15,11 @@ use Jampire\MoonshineImpersonate\Http\Middleware\ImpersonateMiddleware;
 use Jampire\MoonshineImpersonate\Providers\EventServiceProvider;
 use Jampire\MoonshineImpersonate\Services\ImpersonateManager;
 use Jampire\MoonshineImpersonate\Support\Settings;
+use Jampire\MoonshineImpersonate\UI\Resources\ImpersonatedResource;
 use Jampire\MoonshineImpersonate\UI\View\Components\StopImpersonation;
+use MoonShine\Menu\MenuGroup;
+use MoonShine\Menu\MenuItem;
+use MoonShine\MoonShine;
 
 /**
  * Class ImpersonateServiceProvider
@@ -58,6 +63,8 @@ class ImpersonateServiceProvider extends ServiceProvider
         $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
 
         $this->loadTranslationsFrom(__DIR__.'/../lang', Settings::ALIAS);
+
+        $this->registerMenu();
     }
 
     private function registerMiddleware(Kernel $kernel): void
@@ -168,5 +175,48 @@ class ImpersonateServiceProvider extends ServiceProvider
                 'view-components',
             ]
         );
+
+        // Icons, TODO: test
+        $iconPath = resource_path('views/vendor/moonshine/shared/icons');
+        if (!File::isDirectory($iconPath)) {
+            File::makeDirectory(path: $iconPath, recursive: true);
+        }
+
+        $this->publishes(
+            [
+                __DIR__.'/../resources/views/icons' => $iconPath,
+            ],
+            [
+                Settings::ALIAS,
+                'icons',
+            ]
+        );
+    }
+
+    private function registerMenu(): void
+    {
+        if (config_impersonate('register_menu') === false) {
+            return;
+        }
+
+        $items = [
+            MenuItem::make(Settings::ALIAS.'::ui.resources.impersonated.title', new ImpersonatedResource())
+                ->translatable()
+                ->icon('heroicons.users'), // TODO
+        ];
+        if (config_impersonate('show_documentation') === true) {
+            $items[] = MenuItem::make(
+                Settings::ALIAS.'::ui.resources.docs.title',
+                'https://dzianiskotau.com/moonshine-impersonate/'
+            )
+                ->translatable()
+                ->icon('heroicons.academic-cap');
+        }
+
+        $menu = MenuGroup::make(Settings::ALIAS.'::ui.resources.impersonate.title', $items)
+            ->translatable()
+            ->icon('heroicons.finger-print'); // TODO
+
+        app(MoonShine::class)->customItems([$menu]);
     }
 }

@@ -19,12 +19,12 @@ final class EnterImpersonationItemAction implements ItemActionContract
 {
     use Makeable;
 
-    public function resolve(): ItemAction
+    public function resolve(bool $showLabel = true): ItemAction
     {
         $action = app(EnterAction::class);
 
         return ItemAction::make(
-            trans_impersonate('ui.buttons.enter.label'),
+            $showLabel ? trans_impersonate('ui.buttons.enter.label') : '',
             fn (Authenticatable $item) => $action->execute($item->getAuthIdentifier(), true),
             trans_impersonate('ui.buttons.enter.message') // TODO: set message from $action->execute
         )
