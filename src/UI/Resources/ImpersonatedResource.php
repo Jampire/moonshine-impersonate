@@ -4,17 +4,18 @@ declare(strict_types=1);
 
 namespace Jampire\MoonshineImpersonate\UI\Resources;
 
+use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
+use Jampire\MoonshineImpersonate\Scopes\ExcludeMyselfScope;
+use Jampire\MoonshineImpersonate\Services\ImpersonatedAggregationService;
 use Jampire\MoonshineImpersonate\Support\Settings;
 use Jampire\MoonshineImpersonate\UI\ItemActions\EnterImpersonationItemAction;
 use MoonShine\Fields\Email;
 use MoonShine\Fields\NoInput;
-use MoonShine\Fields\Number;
 use MoonShine\Fields\Text;
 use MoonShine\Resources\Resource;
 use MoonShine\Fields\ID;
 use MoonShine\Actions\FiltersAction;
-use MoonShine\Traits\Models\HasMoonShineChangeLog;
 
 /**
  * Class ImpersonatedResource
@@ -23,7 +24,6 @@ use MoonShine\Traits\Models\HasMoonShineChangeLog;
  */
 class ImpersonatedResource extends Resource
 {
-//    public static string $orderType = 'ASC';
     public static bool $withPolicy = false; // TODO: true
 
     public static string $orderField = 'id'; // TODO: last_impersonated_at
@@ -52,21 +52,37 @@ class ImpersonatedResource extends Resource
 	{
 		$fields = [
 		    ID::make()->sortable(),
+
             Text::make(
                 trans_impersonate('ui.resources.impersonated.fields.name'),
                 config_impersonate('resources.impersonated.fields.name'),
             )->sortable(),
+
             Email::make(
                 trans_impersonate('ui.resources.impersonated.fields.email'),
                 config_impersonate('resources.impersonated.fields.email'),
             )->sortable(),
-//            NoInput::make(trans_impersonate('ui.resources.impersonated.fields.impersonated_count'), ''), // TODO: ???
-//            NoInput::make(trans_impersonate('ui.resources.impersonated.fields.last_impersonated_by'), ''), // TODO: ???
-//            NoInput::make(trans_impersonate('ui.resources.impersonated.fields.last_impersonated_at'), ''), // TODO: ???
         ];
 
-        if (Settings::isImpersonationLoggable()) {
+        if (Settings::isImpersonationLoggable($this->getModel())) {
+            // TODO: sort
+            $fields[] = NoInput::make(
+                trans_impersonate('ui.resources.impersonated.fields.impersonated_count'),
+                'impersonated_count',
+                fn (Authenticatable $item) => ImpersonatedAggregationService::count($item),
+            )->sortable();
 
+            $fields[] = NoInput::make(
+                trans_impersonate('ui.resources.impersonated.fields.last_impersonated_by'),
+                'last_impersonated_by',
+                fn (Authenticatable $item) => ImpersonatedAggregationService::lastImpersonatedBy($item),
+            )->sortable(); // TODO: relation
+
+            $fields[] = NoInput::make(
+                trans_impersonate('ui.resources.impersonated.fields.last_impersonated_at'),
+                'last_impersonated_at',
+                fn (Authenticatable $item) => ImpersonatedAggregationService::lastImpersonatedAt($item),
+            )->sortable();
         }
 
         return $fields;
@@ -98,6 +114,13 @@ class ImpersonatedResource extends Resource
     {
         return [
             EnterImpersonationItemAction::make()->resolve(false)->showInLine(),
+        ];
+    }
+
+    public function scopes(): array
+    {
+        return  [
+            new ExcludeMyselfScope(),
         ];
     }
 }

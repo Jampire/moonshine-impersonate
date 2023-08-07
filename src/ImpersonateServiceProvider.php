@@ -204,6 +204,7 @@ class ImpersonateServiceProvider extends ServiceProvider
                 ->translatable()
                 ->icon('heroicons.users'), // TODO
         ];
+
         if (config_impersonate('show_documentation') === true) {
             $items[] = MenuItem::make(
                 Settings::ALIAS.'::ui.resources.docs.title',

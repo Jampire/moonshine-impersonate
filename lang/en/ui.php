@@ -16,16 +16,6 @@ return [
         'impersonate' => [
             'title' => 'Impersonation',
         ],
-//        'users' => [
-//            'title' => 'Users',
-//            'fields' => [
-//                'name' => 'Name',
-//                'email' => 'E-mail',
-//                'impersonated_count' => 'Impersonated Count',
-//                'last_impersonated_by' => 'Last Impersonated By',
-//                'last_impersonated_at' => 'Last Impersonation Date',
-//            ],
-//        ],
         'impersonated' => [
             'title' => 'Impersonated Users',
             'fields' => [
@@ -39,5 +29,8 @@ return [
         'docs' => [
             'title' => 'Documentation',
         ],
+    ],
+    'exceptions' => [
+        'impersonated_not_loggable' => 'User model :class class does not use :trait trait. Please read MoonShine documentation.',
     ],
 ];

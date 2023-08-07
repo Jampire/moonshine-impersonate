@@ -41,4 +41,6 @@ return [
             ],
         ],
     ],
+
+    'default_auth_guard' => env('MS_IMPERSONATE_DEFAULT_GUARD', 'web'),
 ];

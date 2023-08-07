@@ -55,12 +55,8 @@ class Settings
         return 'impersonator-guard';
     }
 
-    public static function isImpersonationLoggable(): bool
+    public static function isImpersonationLoggable(mixed $model = null): bool
     {
-        return in_array(
-            HasMoonShineChangeLog::class,
-            class_uses_recursive(self::userClass()),
-            true
-        );
+        return isset(class_uses_recursive($model ?? self::userClass())[HasMoonShineChangeLog::class]);
     }
 }
