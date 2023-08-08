@@ -6,6 +6,8 @@ namespace Jampire\MoonshineImpersonate\UI\Resources;
 
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
+use Jampire\MoonshineImpersonate\Enums\State;
 use Jampire\MoonshineImpersonate\Scopes\ExcludeMyselfScope;
 use Jampire\MoonshineImpersonate\Services\ImpersonatedAggregationService;
 use Jampire\MoonshineImpersonate\Support\Settings;
@@ -14,6 +16,7 @@ use MoonShine\Fields\Email;
 use MoonShine\Fields\NoInput;
 use MoonShine\Fields\Text;
 use MoonShine\Filters\SwitchBooleanFilter;
+use MoonShine\QueryTags\QueryTag;
 use MoonShine\Resources\Resource;
 use MoonShine\Fields\ID;
 use MoonShine\Actions\FiltersAction;
@@ -119,12 +122,37 @@ class ImpersonatedResource extends Resource
 
     public function queryTags(): array
     {
+        if (!Settings::isImpersonationLoggable($this->getModel())) {
+            return [];
+        }
+
+        return [
+            QueryTag::make(
+                trans_impersonate('ui.resources.impersonated.filters.impersonated_only'),
+                fn (Builder $query) => $query->whereHas('changeLogs', function (Builder $builder) {
+                    $builder->where('states_before', '"'.State::IMPERSONATION_STOPPED->value.'"')
+                        ->orWhere('states_before', '"'.State::IMPERSONATION_ENTERED->value.'"');
+                })
+            ),
+
+            QueryTag::make(
+                trans_impersonate('ui.resources.impersonated.filters.all'),
+                fn (Builder $query) => $query
+            ),
+        ];
     }
 
     public function filters(): array //
     {
         return [
-//            SwitchBooleanFilter::make('Impersonated', config_impersonate('resources.impersonated.fields.email')),
+            SwitchBooleanFilter::make(
+                trans_impersonate('ui.resources.impersonated.filters.impersonated_only'),
+                'impersonated_count',
+                fn (Builder $query) => $query->whereHas('changeLogs', function (Builder $builder) {
+                    $builder->where('states_before', '"'.State::IMPERSONATION_STOPPED->value.'"')
+                        ->orWhere('states_before', '"'.State::IMPERSONATION_ENTERED->value.'"');
+                })
+            ),
         ];
     }
 

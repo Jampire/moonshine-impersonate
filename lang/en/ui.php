@@ -25,6 +25,10 @@ return [
                 'last_impersonated_by' => 'Last Impersonated By',
                 'last_impersonated_at' => 'Last Impersonation Date',
             ],
+            'filters' => [
+                'impersonated_only' => 'Impersonated Only',
+                'all' => 'All Users',
+            ],
         ],
         'docs' => [
             'title' => 'Documentation',
