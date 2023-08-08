@@ -20,27 +20,27 @@ class ImpersonateController extends Controller
 {
     public function enter(EnterFormRequest $request, EnterAction $action): Redirector|RedirectResponse
     {
-        if (!$action->execute($request->safe()->id)) {
-            // TODO: flash message
+        $action->execute($request->safe()->id);
 
-            // @codeCoverageIgnoreStart
-            return redirect()->back();
-            // @codeCoverageIgnoreEnd
-        }
+        // TODO: flash message if execution failed
 
-        return redirect(config_impersonate('redirect_to'));
+        return (
+        empty(config_impersonate('redirect_to')) ?
+            redirect()->back() :
+            redirect(config_impersonate('redirect_to'))
+        );
     }
 
     public function stop(StopFormRequest $request, StopAction $action): Redirector|RedirectResponse
     {
-        if (!$action->execute()) {
-            // TODO: flash message
+        $action->execute();
 
-            // @codeCoverageIgnoreStart
-            return redirect()->back();
-            // @codeCoverageIgnoreEnd
-        }
+        // TODO: flash message if execution failed
 
-        return redirect(config_impersonate('redirect_to'));
+        return (
+            empty(config_impersonate('redirect_to')) ?
+                redirect()->back() :
+                redirect(config_impersonate('redirect_to'))
+        );
     }
 }

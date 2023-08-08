@@ -5,10 +5,7 @@ return [
     'key' => env('MS_IMPERSONATE_KEY', 'user-proxy'),
 
     // what route application will be redirected to after impersonating is started/ended
-    'redirect_to' => env(
-        'MS_IMPERSONATE_REDIRECT_TO',
-        config('moonshine.route.prefix', '/')
-    ),
+    'redirect_to' => env('MS_IMPERSONATE_REDIRECT_TO'),
 
     'routes' => [
         // impersonate routes prefix

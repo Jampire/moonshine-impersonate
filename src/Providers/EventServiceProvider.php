@@ -7,6 +7,8 @@ use Jampire\MoonshineImpersonate\Events\ImpersonationEntered;
 use Jampire\MoonshineImpersonate\Events\ImpersonationStopped;
 use Jampire\MoonshineImpersonate\Listeners\LogImpersonationEnter;
 use Jampire\MoonshineImpersonate\Listeners\LogImpersonationStopped;
+use Jampire\MoonshineImpersonate\Observers\ClearImpersonatedCacheObserver;
+use MoonShine\Models\MoonshineChangeLog;
 
 /**
  * Class EventServiceProvider
@@ -21,6 +23,12 @@ class EventServiceProvider extends ServiceProvider
         ],
         ImpersonationStopped::class => [
             LogImpersonationStopped::class,
+        ],
+    ];
+
+    protected $observers = [
+        MoonshineChangeLog::class => [
+            ClearImpersonatedCacheObserver::class,
         ],
     ];
 }

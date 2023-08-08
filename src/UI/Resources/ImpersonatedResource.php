@@ -13,6 +13,7 @@ use Jampire\MoonshineImpersonate\UI\ItemActions\EnterImpersonationItemAction;
 use MoonShine\Fields\Email;
 use MoonShine\Fields\NoInput;
 use MoonShine\Fields\Text;
+use MoonShine\Filters\SwitchBooleanFilter;
 use MoonShine\Resources\Resource;
 use MoonShine\Fields\ID;
 use MoonShine\Actions\FiltersAction;
@@ -26,9 +27,9 @@ class ImpersonatedResource extends Resource
 {
     public static bool $withPolicy = false; // TODO: true
 
-    public static string $orderField = 'id'; // TODO: last_impersonated_at
+    public static string $orderField = 'id';
 
-    public static string $orderType = 'DESC';
+    public static string $orderType = 'ASC';
 
     public static array $activeActions = ['show'];
 
@@ -47,6 +48,20 @@ class ImpersonatedResource extends Resource
     {
         return trans_impersonate('ui.resources.impersonated.title');
     }
+
+    // TODO: make by filters
+//    public function performOrder(Builder $query, string $column, string $direction): Builder
+//    {
+//        if (Settings::isImpersonationLoggable($this->getModel())) {
+//            return $query->orWhereHas('changeLogs', function (Builder $builder) {
+//                $builder->where('states_before', '"'.State::IMPERSONATION_STOPPED->value.'"')
+//                    ->where('states_after', '"'.State::IMPERSONATION_ENTERED->value.'"')
+//                    ->latest();
+//            });
+//        }
+//
+//        return $query->orderBy('id');
+//    }
 
     public function fields(): array
 	{
@@ -70,37 +85,47 @@ class ImpersonatedResource extends Resource
                 trans_impersonate('ui.resources.impersonated.fields.impersonated_count'),
                 'impersonated_count',
                 fn (Authenticatable $item) => ImpersonatedAggregationService::count($item),
-            )->sortable();
+            );
 
             $fields[] = NoInput::make(
                 trans_impersonate('ui.resources.impersonated.fields.last_impersonated_by'),
                 'last_impersonated_by',
                 fn (Authenticatable $item) => ImpersonatedAggregationService::lastImpersonatedBy($item),
-            )->sortable(); // TODO: relation
+            ); // TODO: badge admin
 
             $fields[] = NoInput::make(
                 trans_impersonate('ui.resources.impersonated.fields.last_impersonated_at'),
                 'last_impersonated_at',
                 fn (Authenticatable $item) => ImpersonatedAggregationService::lastImpersonatedAt($item),
-            )->sortable();
+            );
         }
 
         return $fields;
 	}
 
-	public function rules(Model $item): array //
+	public function rules(Model $item): array
 	{
 	    return [];
     }
 
-    public function search(): array //
+    public function search(): array
     {
-        return ['id'];
+        return [
+            'id',
+            config_impersonate('resources.impersonated.fields.name'),
+            config_impersonate('resources.impersonated.fields.email'),
+        ];
+    }
+
+    public function queryTags(): array
+    {
     }
 
     public function filters(): array //
     {
-        return [];
+        return [
+//            SwitchBooleanFilter::make('Impersonated', config_impersonate('resources.impersonated.fields.email')),
+        ];
     }
 
     public function actions(): array //
