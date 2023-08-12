@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Jampire\MoonshineImpersonate\Support;
 
+use Jampire\MoonshineImpersonate\Models\Concerns\HasImpersonatedAudit;
 use MoonShine\Traits\Models\HasMoonShineChangeLog;
 
 /**
@@ -57,6 +58,11 @@ class Settings
 
     public static function isImpersonationLoggable(mixed $model = null): bool
     {
-        return isset(class_uses_recursive($model ?? self::userClass())[HasMoonShineChangeLog::class]);
+        $uses = class_uses_recursive($model ?? self::userClass());
+
+        return isset(
+            $uses[HasMoonShineChangeLog::class],
+            $uses[HasImpersonatedAudit::class],
+        );
     }
 }

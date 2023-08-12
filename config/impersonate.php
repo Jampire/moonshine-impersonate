@@ -35,7 +35,10 @@ return [
             'fields' => [
                 'name' => env('MS_RS_IMPERSONATED_FIELDS_NAME', 'name'),
                 'email' => env('MS_RS_IMPERSONATED_FIELDS_NAME', 'email'),
+                'date_format' => env('MS_RS_IMPERSONATED_FIELDS_DATE_FORMAT', 'Y-m-d H:i:s'),
             ],
+            'items_per_page' => env('MS_RS_IMPERSONATED_ITEMS_PER_PAGE', 25),
+            'show_count_badge' => env('MS_RS_IMPERSONATED_COUNT_BADGE', true),
         ],
     ],
 

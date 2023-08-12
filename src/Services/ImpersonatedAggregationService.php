@@ -10,8 +10,8 @@ use Illuminate\Support\Facades\Cache;
 use Jampire\MoonshineImpersonate\Enums\State;
 use Jampire\MoonshineImpersonate\Exceptions\IsNotLoggableException;
 use Jampire\MoonshineImpersonate\Support\Settings;
+use MoonShine\Models\MoonshineChangeLog;
 use MoonShine\Models\MoonshineUser;
-use MoonShine\Traits\Models\HasMoonShineChangeLog;
 
 /**
  * Class ImpersonatedAggregationService
@@ -26,63 +26,59 @@ class ImpersonatedAggregationService
 
     private ?Carbon $lastImpersonatedAt = null;
 
+    /**
+     * @throws IsNotLoggableException
+     */
     public function __construct(private readonly Authenticatable $impersonated)
     {
-        throw_if(
-            !Settings::isImpersonationLoggable(),
-            new IsNotLoggableException(),
-            trans_impersonate('ui.exceptions.impersonated_not_loggable', [
-                'class' => get_class($this->impersonated),
-                'trait' => HasMoonShineChangeLog::class,
-            ])
-        );
+        if (!Settings::isImpersonationLoggable()) {
+            throw IsNotLoggableException::userIsNotLoggable($this->impersonated);
+        }
 
         $this->setData();
     }
 
+    /**
+     * @throws IsNotLoggableException
+     */
     public static function count(Authenticatable $impersonated): int
     {
         return (new self($impersonated))->getCount();
     }
 
+    /**
+     * @throws IsNotLoggableException
+     */
     public static function lastImpersonatedBy(Authenticatable $impersonated): ?string
     {
         return (new self($impersonated))->getLastImpersonatorName();
     }
 
+    /**
+     * @throws IsNotLoggableException
+     */
     public static function lastImpersonatedAt(Authenticatable $impersonated): ?Carbon
     {
         return (new self($impersonated))->getLastImpersonatedAt();
     }
 
-    private function setData(): void
+    public static function countUsers(): int
     {
         $key = [
             'impersonated',
-            $this->impersonated->getAuthIdentifier(),
+            'countUsers',
             State::IMPERSONATION_ENTERED->value,
         ];
-        [$this->count, $this->lastImpersonatorName, $this->lastImpersonatedAt] =
-            Cache::rememberForever(implode('::', $key), function () {
-                $logs = $this->impersonated->changeLogs()
-                    ->where('states_before', '"'.State::IMPERSONATION_STOPPED->value.'"')
-                    ->where('states_after', '"'.State::IMPERSONATION_ENTERED->value.'"')
-                    ->latest()
-                    ->get();
 
-                $count = $logs->count();
-                if ($count === 0) {
-                    return [0, null, null];
-                }
-
-                $first = $logs->first();
-
-                return [
-                    $count,
-                    MoonshineUser::find($first->moonshine_user_id)->name,
-                    $first->created_at,
-                ];
-            });
+        return Cache::rememberForever(implode('::', $key), function () {
+            return MoonshineChangeLog::query()
+                ->select('changelogable_id')
+                ->where('states_before', '"'.State::IMPERSONATION_STOPPED->value.'"')
+                ->where('states_after', '"'.State::IMPERSONATION_ENTERED->value.'"')
+                ->groupBy('changelogable_id')
+                ->get()
+                ->count();
+        });
     }
 
     public function getCount(): int
@@ -98,5 +94,35 @@ class ImpersonatedAggregationService
     public function getLastImpersonatedAt(): ?Carbon
     {
         return $this->lastImpersonatedAt;
+    }
+
+    private function setData(): void
+    {
+        $key = [
+            'impersonated',
+            $this->impersonated->getAuthIdentifier(),
+            State::IMPERSONATION_ENTERED->value,
+        ];
+        [$this->count, $this->lastImpersonatorName, $this->lastImpersonatedAt] =
+            Cache::rememberForever(implode('::', $key), function () {
+                $logs = $this->impersonated->changeLogs()
+                    ->where('states_before', '"'.State::IMPERSONATION_STOPPED->value.'"')
+                    ->where('states_after', '"'.State::IMPERSONATION_ENTERED->value.'"')
+//                    ->latest()
+                    ->get();
+
+                $count = $logs->count();
+                if ($count === 0) {
+                    return [0, null, null];
+                }
+
+                $first = $logs->first();
+
+                return [
+                    $count,
+                    MoonshineUser::find($first->moonshine_user_id)->name,
+                    $first->created_at,
+                ];
+            });
     }
 }

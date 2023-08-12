@@ -24,5 +24,12 @@ class ClearImpersonatedCache implements ShouldQueue
             State::IMPERSONATION_ENTERED->value,
         ];
         Cache::forget(implode('::', $key));
+
+        $key = [
+            'impersonated',
+            'countUsers',
+            State::IMPERSONATION_ENTERED->value,
+        ];
+        Cache::forget(implode('::', $key));
     }
 }

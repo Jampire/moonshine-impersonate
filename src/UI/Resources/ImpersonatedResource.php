@@ -12,7 +12,12 @@ use Jampire\MoonshineImpersonate\Scopes\ExcludeMyselfScope;
 use Jampire\MoonshineImpersonate\Services\ImpersonatedAggregationService;
 use Jampire\MoonshineImpersonate\Support\Settings;
 use Jampire\MoonshineImpersonate\UI\ItemActions\EnterImpersonationItemAction;
+use MoonShine\Decorations\Block;
+use MoonShine\Fields\BelongsToMany;
+use MoonShine\Fields\Date;
 use MoonShine\Fields\Email;
+use MoonShine\Fields\MorphMany;
+use MoonShine\Fields\MorphToMany;
 use MoonShine\Fields\NoInput;
 use MoonShine\Fields\Text;
 use MoonShine\Filters\SwitchBooleanFilter;
@@ -25,6 +30,7 @@ use MoonShine\Actions\FiltersAction;
  * Class ImpersonatedResource
  *
  * @author Dzianis Kotau <me@dzianiskotau.com>
+ * TODO: install script
  */
 class ImpersonatedResource extends Resource
 {
@@ -38,7 +44,16 @@ class ImpersonatedResource extends Resource
 
     protected bool $showInModal = true;
 
-    public static int $itemsPerPage = 25;
+    public string $titleField = 'name';
+
+    public static int $itemsPerPage = 25; // TODO
+
+    private readonly bool $isImpersonationLoggable;
+
+    public function __construct()
+    {
+        $this->isImpersonationLoggable = Settings::isImpersonationLoggable($this->getModel());
+    }
 
     public function getModel(): Model
     {
@@ -52,10 +67,23 @@ class ImpersonatedResource extends Resource
         return trans_impersonate('ui.resources.impersonated.title');
     }
 
+//    public function getWith(): array
+//    {
+//        return $this->isImpersonationLoggable ? ['changeLogs'] : [];
+//    }
+
+    /**
+     * @return int
+     */
+    public function getItemsPerPage(): int
+    {
+        return config_impersonate('resources.impersonated.items_per_page');
+    }
+
     // TODO: make by filters
 //    public function performOrder(Builder $query, string $column, string $direction): Builder
 //    {
-//        if (Settings::isImpersonationLoggable($this->getModel())) {
+//        if ($this->isImpersonationLoggable) {
 //            return $query->orWhereHas('changeLogs', function (Builder $builder) {
 //                $builder->where('states_before', '"'.State::IMPERSONATION_STOPPED->value.'"')
 //                    ->where('states_after', '"'.State::IMPERSONATION_ENTERED->value.'"')
@@ -82,7 +110,7 @@ class ImpersonatedResource extends Resource
             )->sortable(),
         ];
 
-        if (Settings::isImpersonationLoggable($this->getModel())) {
+        if ($this->isImpersonationLoggable) {
             // TODO: sort
             $fields[] = NoInput::make(
                 trans_impersonate('ui.resources.impersonated.fields.impersonated_count'),
@@ -96,11 +124,11 @@ class ImpersonatedResource extends Resource
                 fn (Authenticatable $item) => ImpersonatedAggregationService::lastImpersonatedBy($item),
             ); // TODO: badge admin
 
-            $fields[] = NoInput::make(
+            $fields[] = Date::make(
                 trans_impersonate('ui.resources.impersonated.fields.last_impersonated_at'),
                 'last_impersonated_at',
                 fn (Authenticatable $item) => ImpersonatedAggregationService::lastImpersonatedAt($item),
-            );
+            )->format(config_impersonate('resources.impersonated.fields.date_format'));
         }
 
         return $fields;
@@ -122,7 +150,7 @@ class ImpersonatedResource extends Resource
 
     public function queryTags(): array
     {
-        if (!Settings::isImpersonationLoggable($this->getModel())) {
+        if (!$this->isImpersonationLoggable) {
             return [];
         }
 

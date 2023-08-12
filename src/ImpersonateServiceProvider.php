@@ -10,15 +10,18 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\ServiceProvider;
 use Jampire\MoonshineImpersonate\Actions\EnterAction;
 use Jampire\MoonshineImpersonate\Actions\StopAction;
+use Jampire\MoonshineImpersonate\Enums\State;
 use Jampire\MoonshineImpersonate\Guards\SessionGuard;
 use Jampire\MoonshineImpersonate\Http\Middleware\ImpersonateMiddleware;
 use Jampire\MoonshineImpersonate\Providers\EventServiceProvider;
+use Jampire\MoonshineImpersonate\Services\ImpersonatedAggregationService;
 use Jampire\MoonshineImpersonate\Services\ImpersonateManager;
 use Jampire\MoonshineImpersonate\Support\Settings;
 use Jampire\MoonshineImpersonate\UI\Resources\ImpersonatedResource;
 use Jampire\MoonshineImpersonate\UI\View\Components\StopImpersonation;
 use MoonShine\Menu\MenuGroup;
 use MoonShine\Menu\MenuItem;
+use MoonShine\Models\MoonshineChangeLog;
 use MoonShine\MoonShine;
 
 /**
@@ -63,6 +66,8 @@ class ImpersonateServiceProvider extends ServiceProvider
         $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
 
         $this->loadTranslationsFrom(__DIR__.'/../lang', Settings::ALIAS);
+
+        $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
 
         $this->registerMenu();
     }
@@ -199,11 +204,24 @@ class ImpersonateServiceProvider extends ServiceProvider
             return;
         }
 
-        $items = [
-            MenuItem::make(Settings::ALIAS.'::ui.resources.impersonated.title', new ImpersonatedResource())
-                ->translatable()
-                ->icon('heroicons.users'), // TODO
-        ];
+        $items = [];
+
+        $impersonatedResource = MenuItem::make(
+            Settings::ALIAS.'::ui.resources.impersonated.title',
+            new ImpersonatedResource()
+        )
+            ->translatable()
+            ->icon('heroicons.users'); // TODO
+
+        if (config_impersonate('resources.impersonated.show_count_badge') === true &&
+            Settings::isImpersonationLoggable() &&
+            ($countUsers = ImpersonatedAggregationService::countUsers())) {
+            $impersonatedResource = $impersonatedResource->badge(
+                fn () => $countUsers
+            );
+        }
+
+        $items[] = $impersonatedResource;
 
         if (config_impersonate('show_documentation') === true) {
             $items[] = MenuItem::make(

@@ -36,5 +36,6 @@ return [
     ],
     'exceptions' => [
         'impersonated_not_loggable' => 'User model :class class does not use :trait trait. Please read MoonShine documentation.',
+        'audit_impersonated_failed' => 'Failed to execute audit job. Please, check logs.',
     ],
 ];
