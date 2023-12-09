@@ -13,12 +13,15 @@ use Jampire\MoonshineImpersonate\Services\ImpersonatedAggregationService;
 use Jampire\MoonshineImpersonate\Support\Settings;
 use Jampire\MoonshineImpersonate\UI\ItemActions\EnterImpersonationItemAction;
 use MoonShine\Decorations\Block;
+use MoonShine\Fields\BelongsTo;
 use MoonShine\Fields\BelongsToMany;
 use MoonShine\Fields\Date;
 use MoonShine\Fields\Email;
+use MoonShine\Fields\HasOne;
 use MoonShine\Fields\MorphMany;
 use MoonShine\Fields\MorphToMany;
 use MoonShine\Fields\NoInput;
+use MoonShine\Fields\Number;
 use MoonShine\Fields\Text;
 use MoonShine\Filters\SwitchBooleanFilter;
 use MoonShine\QueryTags\QueryTag;
@@ -41,6 +44,8 @@ class ImpersonatedResource extends Resource
     public static string $orderType = 'ASC';
 
     public static array $activeActions = ['show'];
+
+    public static array $with = ['impersonatedAudit', 'impersonatedAudit.moonshineUser']; // TODO: delete after moonshine update
 
     protected bool $showInModal = true;
 
@@ -67,10 +72,10 @@ class ImpersonatedResource extends Resource
         return trans_impersonate('ui.resources.impersonated.title');
     }
 
-//    public function getWith(): array
-//    {
-//        return $this->isImpersonationLoggable ? ['changeLogs'] : [];
-//    }
+    public function getWith(): array
+    {
+        return $this->isImpersonationLoggable ? ['impersonatedAudit'] : [];
+    }
 
     /**
      * @return int
@@ -112,17 +117,34 @@ class ImpersonatedResource extends Resource
 
         if ($this->isImpersonationLoggable) {
             // TODO: sort
-            $fields[] = NoInput::make(
-                trans_impersonate('ui.resources.impersonated.fields.impersonated_count'),
-                'impersonated_count',
-                fn (Authenticatable $item) => ImpersonatedAggregationService::count($item),
-            );
 
-            $fields[] = NoInput::make(
+            $fields[] = HasOne::make(
+                trans_impersonate('ui.resources.impersonated.fields.impersonated_count'),
+                'impersonatedAudit',
+            )->fields([
+                ID::make()->hideOnIndex(),
+                Number::make('counter'),
+            ]);
+
+            $fields[] = HasOne::make(
                 trans_impersonate('ui.resources.impersonated.fields.last_impersonated_by'),
-                'last_impersonated_by',
-                fn (Authenticatable $item) => ImpersonatedAggregationService::lastImpersonatedBy($item),
-            ); // TODO: badge admin
+                'impersonatedAudit',
+            )->fields([
+                ID::make()->hideOnIndex(),
+                BelongsTo::make('ABC', 'moonshine_user_id', 'name'),
+            ]);
+
+//            $fields[] = NoInput::make(
+//                trans_impersonate('ui.resources.impersonated.fields.impersonated_count'),
+//                'impersonated_count',
+//                fn (Authenticatable $item) => ImpersonatedAggregationService::count($item),
+//            );
+
+//            $fields[] = NoInput::make(
+//                trans_impersonate('ui.resources.impersonated.fields.last_impersonated_by'),
+//                'last_impersonated_by',
+//                fn (Authenticatable $item) => ImpersonatedAggregationService::lastImpersonatedBy($item),
+//            ); // TODO: badge admin
 
             $fields[] = Date::make(
                 trans_impersonate('ui.resources.impersonated.fields.last_impersonated_at'),

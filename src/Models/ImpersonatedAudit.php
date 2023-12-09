@@ -12,6 +12,8 @@ use MoonShine\Models\MoonshineUser;
 /**
  * Class ImpersonatedAudit
  *
+ * Logs last entered impersonation only
+ *
  * @author Dzianis Kotau <me@dzianiskotau.com>
  */
 class ImpersonatedAudit extends Model
@@ -32,10 +34,5 @@ class ImpersonatedAudit extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(Settings::userClass());
-    }
-
-    public function count(): void
-    {
-        $this->increment('counter');
     }
 }
