@@ -54,7 +54,7 @@ it('can show confirmation dialog for this item action', function (): void {
 
     $itemAction = EnterImpersonationItemAction::make()->resolve()->withConfirm();
 
-    expect($itemAction->confirmation())
+    expect($itemAction->isConfirmed())
         ->toBeTrue()
     ;
 });
