@@ -1,5 +1,11 @@
 # Release Notes for 1.x
 
+## [1.4.1 (2023-12-15)](https://github.com/Jampire/moonshine-impersonate/compare/v1.4.0...v1.4.1)
+
+### Adds
+
+- Locked to MoonShine v1.x ([#24](https://github.com/Jampire/moonshine-impersonate/pull/24))
+
 ## [1.4.0 (2023-06-03)](https://github.com/Jampire/moonshine-impersonate/compare/v1.3.0...v1.4.0)
 
 ### Adds
