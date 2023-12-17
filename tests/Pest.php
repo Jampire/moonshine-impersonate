@@ -4,10 +4,14 @@ declare(strict_types=1);
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Testing\TestResponse;
 use Jampire\MoonshineImpersonate\Support\Settings;
 use Jampire\MoonshineImpersonate\Tests\Stubs\Models\MoonshineUser;
 use Jampire\MoonshineImpersonate\Tests\Stubs\Models\User;
 use Jampire\MoonshineImpersonate\Tests\TestCase;
+
+use function Pest\Laravel\get;
+use function Pest\Laravel\post;
 
 /*
 |--------------------------------------------------------------------------
@@ -112,4 +116,19 @@ function registerHomePage(): void
             })
                 ->name('me');
         });
+}
+
+function enterResponse(string $routeFn, string $routeName, int $id): TestResponse
+{
+    if ($routeFn === 'get') {
+        $response = get(route_impersonate($routeName, [
+            config_impersonate('resource_item_key') => $id,
+        ]));
+    } else {
+        $response = post(route_impersonate($routeName, [
+            config_impersonate('resource_item_key') => $id,
+        ]));
+    }
+
+    return $response;
 }

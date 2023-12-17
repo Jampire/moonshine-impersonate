@@ -48,4 +48,15 @@ class EnterFormRequest extends FormRequest
             'id' => trans_impersonate('validation.enter.id'),
         ];
     }
+
+    protected function prepareForValidation(): void
+    {
+        $key = config_impersonate('resource_item_key');
+
+        if ($this->has($key)) {
+            $this->merge([
+                'id' => (int)$this->get($key),
+            ]);
+        }
+    }
 }

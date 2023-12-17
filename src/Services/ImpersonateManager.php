@@ -89,7 +89,7 @@ final class ImpersonateManager
     public function saveAuthInSession(Authenticatable $user): void
     {
         session([
-            config_impersonate('key') => $user->getAuthIdentifier(),
+            Settings::key() => $user->getAuthIdentifier(),
             Settings::impersonatorSessionKey() => $this->moonshineUser->getAuthIdentifier(),
             Settings::impersonatorSessionGuardKey() => Settings::moonShineGuard(),
         ]);
@@ -98,7 +98,7 @@ final class ImpersonateManager
     public function clearAuthFromSession(): void
     {
         session()->forget([
-            config_impersonate('key'),
+            Settings::key(),
             Settings::impersonatorSessionKey(),
             Settings::impersonatorSessionGuardKey(),
         ]);

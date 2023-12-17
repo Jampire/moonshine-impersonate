@@ -12,7 +12,7 @@ return [
 
     'routes' => [
         // impersonate routes prefix
-        'prefix' => env('MS_IMPERSONATE_ROUTE_PREFIX', 'impersonate'),
+        'prefix' => env('MS_IMPERSONATE_ROUTE_PREFIX', config('moonshine.route.prefix').'/impersonate'),
 
         // what middleware is used for routes to enter/stop impersonation
         'middleware' => ['web'],
@@ -23,10 +23,14 @@ return [
             'icon' => env('MS_IMPERSONATE_ENTER_BUTTON_ICON', 'heroicons.outline.eye')
         ],
         'stop' => [
-            // if true the button will be set to the header of the page
-            'enabled' => env('MS_IMPERSONATE_STOP_BUTTON_ENABLED', true),
             'icon' => env('MS_IMPERSONATE_STOP_BUTTON_ICON', 'heroicons.outline.eye-slash'),
-            'class' => env('MS_IMPERSONATE_STOP_BUTTON_CLASS', 'btn-pink'),
+            'class' => env('MS_IMPERSONATE_STOP_BUTTON_CLASS', 'btn-secondary'),
         ],
     ],
+
+    // query string key name for resource item
+    'resource_item_key' => env('MS_IMPERSONATE_RESOURCE_ITEM_KEY', 'resourceItem'),
+
+    // show 'toast' notifications on different actions
+    'show_notification' => env('MS_IMPERSONATE_SHOW_NOTIFICATION', true),
 ];

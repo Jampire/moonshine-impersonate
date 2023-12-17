@@ -23,7 +23,7 @@ final class EnterAction
     /**
      * @param int $id ID of the impersonated user
      */
-    public function execute(int $id, bool $shouldValidate = false): bool
+    public function execute(int $id, bool $shouldValidate = true): bool
     {
         $user = $this->manager->findUserById($id);
 

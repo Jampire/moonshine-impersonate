@@ -9,14 +9,18 @@ use Jampire\MoonshineImpersonate\Tests\Stubs\Models\MoonshineUser;
 use Jampire\MoonshineImpersonate\Tests\Stubs\Models\User;
 
 use function Pest\Laravel\actingAs;
-use function Pest\Laravel\post;
+
+uses()->group('http');
 
 beforeEach(function (): void {
     setAuthConfig();
     enableMoonShineGuard();
 });
 
-test('privileged user can impersonate another user', function (): void {
+test('privileged user can impersonate another user', function (
+    string $routeFn,
+    string $routeName,
+): void {
     Event::fake();
 
     $user = User::factory()->create([
@@ -27,9 +31,8 @@ test('privileged user can impersonate another user', function (): void {
     ]);
 
     actingAs($moonShineUser, Settings::moonShineGuard());
-    $response = post(route_impersonate('enter'), [
-        'id' => $user->id,
-    ]);
+
+    $response = enterResponse($routeFn, $routeName, $user->id);
 
     $response
         ->assertSessionHasNoErrors()
@@ -44,6 +47,11 @@ test('privileged user can impersonate another user', function (): void {
         ->toBe(Settings::moonShineGuard())
         ->and(auth(Settings::moonShineGuard())->user()->name)
         ->toBe($moonShineUser->name)
+        ->and($session->get('toast'))
+        ->toMatchArray([
+            'type' => 'success',
+            'message' => trans_impersonate('ui.buttons.enter.message'),
+        ])
     ;
 
     Event::assertDispatched(
@@ -51,75 +59,82 @@ test('privileged user can impersonate another user', function (): void {
             $event->impersonator->getAuthIdentifier() === $moonShineUser->id &&
             $event->impersonated->getAuthIdentifier() === $user->id
     );
-});
+})->with('enter-routes');
 
-test('unauthorized user cannot impersonate another user', function (): void {
-    $response = post(route_impersonate('enter'), [
-        'id' => User::factory()->create()->id,
-    ]);
+test('unauthorized user cannot impersonate another user', function (
+    string $routeFn,
+    string $routeName,
+): void {
+    $response = enterResponse($routeFn, $routeName, User::factory()->create()->id);
 
     $response->assertForbidden();
 
     expect(session()->get(config_impersonate('key')))
         ->toBeEmpty()
     ;
-});
+})->with('enter-routes');
 
-test('regular user cannot impersonate another user', function (): void {
+test('regular user cannot impersonate another user', function (
+    string $routeFn,
+    string $routeName,
+): void {
     $user = User::factory()->create();
 
     actingAs($user, 'web');
-    $response = post(route_impersonate('enter'), [
-        'id' => $user->id,
-    ]);
+
+    $response = enterResponse($routeFn, $routeName, $user->id);
 
     $response->assertForbidden();
 
     expect(session()->get(config_impersonate('key')))
         ->toBeEmpty()
     ;
-});
+})->with('enter-routes');
 
-it('cannot impersonate non-existent user', function (): void {
+it('cannot impersonate non-existent user', function (
+    string $routeFn,
+    string $routeName,
+): void {
     $user = User::factory()->create();
     $moonShineUser = MoonshineUser::factory()->create();
 
     actingAs($moonShineUser, Settings::moonShineGuard());
-    $response = post(route_impersonate('enter'), [
-        'id' => $user->id + 1,
-    ]);
+    $response = enterResponse($routeFn, $routeName, $user->id + 1);
 
     $response->assertNotFound();
 
     expect(session()->get(config_impersonate('key')))
         ->toBeEmpty()
     ;
-});
+})->with('enter-routes');
 
-it('cannot impersonate if already in impersonation mode', function (): void {
+it('cannot impersonate if already in impersonation mode', function (
+    string $routeFn,
+    string $routeName,
+): void {
     $user = User::factory()->create();
     $moonShineUser = MoonshineUser::factory()->create();
 
     actingAs($moonShineUser, Settings::moonShineGuard())
         ->withSession([Settings::key() => $user->getKey()]);
 
-    $response = post(route_impersonate('enter'), [
-        'id' => $user->id,
-    ]);
+    $response = enterResponse($routeFn, $routeName, $user->id);
 
     $response->assertSessionHasErrors([
         'id' => trans_impersonate('validation.enter.is_impersonating'),
     ]);
-});
+})->with('enter-routes');
 
-it('cannot impersonate non-impersonated user', function (): void {
+it('cannot impersonate non-impersonated user', function (
+    string $routeFn,
+    string $routeName
+): void {
     $user = User::factory()->notImpersonated()->create();
     $moonShineUser = MoonshineUser::factory()->create();
 
     actingAs($moonShineUser, Settings::moonShineGuard());
-    $response = post(route_impersonate('enter'), [
-        'id' => $user->id,
-    ]);
+
+    $response = enterResponse($routeFn, $routeName, $user->id);
 
     $response->assertSessionHasErrors([
         'id' => trans_impersonate('validation.enter.cannot_be_impersonated'),
@@ -128,16 +143,18 @@ it('cannot impersonate non-impersonated user', function (): void {
     expect(session()->get(config_impersonate('key')))
         ->toBeEmpty()
     ;
-});
+})->with('enter-routes');
 
-test('admin cannot impersonate with no permissions', function (): void {
+test('admin cannot impersonate with no permissions', function (
+    string $routeFn,
+    string $routeName,
+): void {
     $user = User::factory()->create();
     $moonShineUser = MoonshineUser::factory()->cannotImpersonate()->create();
 
     actingAs($moonShineUser, Settings::moonShineGuard());
-    $response = post(route_impersonate('enter'), [
-        'id' => $user->id,
-    ]);
+
+    $response = enterResponse($routeFn, $routeName, $user->id);
 
     $response->assertSessionHasErrors([
         'id' => trans_impersonate('validation.enter.cannot_impersonate'),
@@ -146,4 +163,4 @@ test('admin cannot impersonate with no permissions', function (): void {
     expect(session()->get(config_impersonate('key')))
         ->toBeEmpty()
     ;
-});
+})->with('enter-routes');

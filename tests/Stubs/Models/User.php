@@ -9,7 +9,7 @@ use Illuminate\Foundation\Auth\User as BaseUser;
 use Illuminate\Support\Str;
 use Jampire\MoonshineImpersonate\Services\Contracts\BeImpersonable;
 use Jampire\MoonshineImpersonate\Tests\Stubs\Database\Factories\UserFactory;
-use MoonShine\Traits\Models\HasMoonShineChangeLog;
+use MoonShine\ChangeLog\Traits\HasChangeLog;
 
 /**
  * Class User
@@ -19,7 +19,7 @@ use MoonShine\Traits\Models\HasMoonShineChangeLog;
 class User extends BaseUser implements BeImpersonable
 {
     use HasFactory;
-    use HasMoonShineChangeLog;
+    use HasChangeLog;
 
     protected $table = 'users';
 

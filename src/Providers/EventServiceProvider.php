@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Jampire\MoonshineImpersonate\Providers;
 
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;

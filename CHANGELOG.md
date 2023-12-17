@@ -1,3 +1,11 @@
+# Release Notes for 2.x
+
+## [2.0.0 (2023-12-17)](https://github.com/Jampire/moonshine-impersonate/compare/v1.4.1...v2.0.0)
+
+### Adds
+
+- MoonShine v2 support, Belarus Localization ([#25](https://github.com/Jampire/moonshine-impersonate/pull/25))
+
 # Release Notes for 1.x
 
 ## [1.4.1 (2023-12-15)](https://github.com/Jampire/moonshine-impersonate/compare/v1.4.0...v1.4.1)

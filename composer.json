@@ -25,17 +25,19 @@
         "source": "https://github.com/Jampire/moonshine-impersonate"
     },
     "require": {
-        "php": "^8.1|^8.2"
+        "php": "^8.1|^8.2|^8.3"
     },
     "require-dev": {
         "driftingly/rector-laravel": "^0.20.0",
         "laravel/pint": "^1.10",
-        "moonshine/moonshine": "^1.56",
+        "moonshine/changelog": "^1.0",
+        "moonshine/moonshine": "^2.0",
         "nunomaduro/collision": "^7.5",
         "nunomaduro/larastan": "^2.0",
         "orchestra/testbench": "^8.5",
         "pestphp/pest": "^2.6",
         "pestphp/pest-plugin-laravel": "^2.0",
+        "pestphp/pest-plugin-type-coverage": "^2.5",
         "rector/rector": "^0.16.0"
     },
     "autoload": {
@@ -52,7 +54,7 @@
         }
     },
     "conflict": {
-        "moonshine/moonshine": "<1.58.0 || >= 2"
+        "moonshine/moonshine": "<2"
     },
     "scripts": {
         "post-autoload-dump": [
@@ -65,10 +67,13 @@
         "analyse": "./vendor/bin/phpstan analyse --ansi --memory-limit=-1",
         "tests": "./vendor/bin/pest --no-coverage --parallel",
         "tests-coverage": "XDEBUG_MODE=coverage ./vendor/bin/pest --coverage --min=100 --parallel",
+        "tests-type": "./vendor/bin/pest --type-coverage --min=100 --parallel",
         "all": [
             "@composer validate --strict --ansi",
             "@style",
+            "@rector",
             "@analyse",
+            "@tests-type",
             "@tests-coverage"
         ]
     },
