@@ -70,7 +70,7 @@ Please review and abide by the [Code of Conduct][5].
 
 [1]: https://moonshine-laravel.com/
 [2]: https://moonshine-laravel.com/docs/section/installation
-[3]: https://dzianiskotau.com/moonshine-impersonate/
+[3]: https://dzianiskotau.com/projects/moonshine-impersonate/v2/docs/ru/
 [4]: CONTRIBUTING.md
 [5]: CODE_OF_CONDUCT.md
 [6]: https://github.com/Jampire
