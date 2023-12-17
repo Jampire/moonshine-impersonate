@@ -1,5 +1,11 @@
 # Release Notes for 1.x
 
+## [1.4.2 (2023-12-17)](https://github.com/Jampire/moonshine-impersonate/compare/v1.4.1...v1.4.2)
+
+### Fixes
+
+- Link v1 update ([#27](https://github.com/Jampire/moonshine-impersonate/pull/27))
+
 ## [1.4.1 (2023-12-15)](https://github.com/Jampire/moonshine-impersonate/compare/v1.4.0...v1.4.1)
 
 ### Adds
