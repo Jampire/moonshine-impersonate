@@ -26,6 +26,7 @@ final class StopAction
     public function execute(): bool
     {
         $user = $this->manager->getUserFromSession();
+
         if (!$user instanceof Authenticatable) {
             return false;
         }

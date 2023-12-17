@@ -8,6 +8,8 @@ use Jampire\MoonshineImpersonate\Tests\Stubs\Models\MoonshineUser;
 
 use function Pest\Laravel\actingAs;
 
+uses()->group('actions');
+
 beforeEach(function (): void {
     setAuthConfig();
     enableMoonShineGuard();

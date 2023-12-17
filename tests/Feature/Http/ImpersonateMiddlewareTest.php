@@ -10,7 +10,8 @@ use Jampire\MoonshineImpersonate\Tests\Stubs\Models\User;
 
 use function Pest\Laravel\actingAs;
 use function Pest\Laravel\get;
-use function Pest\Laravel\post;
+
+uses()->group('http');
 
 beforeEach(function (): void {
     setAuthConfig();
@@ -34,9 +35,10 @@ it('authorizes impersonator as impersonated user', function (): void {
     ;
 
     actingAs($moonShineUser, Settings::moonShineGuard());
-    post(route_impersonate('enter'), [
-        'id' => $user->id,
-    ])->assertSessionHasNoErrors();
+    get(route_impersonate('enter', [
+        config_impersonate('resource_item_key') => $user->id,
+    ]))
+        ->assertSessionHasNoErrors();
 
     $response = get(route('test.me'));
 
@@ -54,9 +56,10 @@ it('cannot impersonate when admin is not authorized', function (): void {
     $moonShineUser = MoonshineUser::factory()->create();
 
     actingAs($moonShineUser, Settings::moonShineGuard());
-    post(route_impersonate('enter'), [
-        'id' => $user->id,
-    ])->assertSessionHasNoErrors();
+    get(route_impersonate('enter', [
+        config_impersonate('resource_item_key') => $user->id,
+    ]))
+        ->assertSessionHasNoErrors();
 
     Auth::logout();
 

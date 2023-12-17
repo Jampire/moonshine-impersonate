@@ -12,6 +12,8 @@ use Jampire\MoonshineImpersonate\Tests\Stubs\Models\User;
 
 use function Pest\Laravel\actingAs;
 
+uses()->group('actions');
+
 beforeEach(function (): void {
     setAuthConfig();
     enableMoonShineGuard();
@@ -26,9 +28,9 @@ test('enter action validation works correctly', function (): void {
 
     $action = app(EnterAction::class);
 
-    expect($action->execute($user->getKey(), true))
+    expect($action->execute($user->getKey()))
         ->toBeTrue()
-        ->and($action->execute($user->getKey(), true))
+        ->and($action->execute($user->getKey()))
         ->toBeFalse()
     ;
 });
@@ -51,7 +53,7 @@ test('enter action cannot be executed on non-impersonated user', function (): vo
 
     $action = app(EnterAction::class);
 
-    expect($action->execute($user->getKey(), true))
+    expect($action->execute($user->getKey()))
         ->toBeFalse()
     ;
 });

@@ -10,7 +10,8 @@ use Jampire\MoonshineImpersonate\Tests\Stubs\Models\User;
 
 use function Pest\Laravel\actingAs;
 use function Pest\Laravel\get;
-use function Pest\Laravel\post;
+
+uses()->group('http');
 
 beforeEach(function (): void {
     setAuthConfig();
@@ -23,9 +24,9 @@ test('privileged user can stop impersonation', function (): void {
     $moonShineUser = MoonshineUser::factory()->create();
 
     actingAs($moonShineUser, Settings::moonShineGuard());
-    post(route_impersonate('enter'), [
-        'id' => $user->id,
-    ])
+    get(route_impersonate('enter', [
+        config_impersonate('resource_item_key') => $user->id,
+    ]))
         ->assertSessionHasNoErrors()
         ->assertRedirect('/');
 
@@ -44,6 +45,11 @@ test('privileged user can stop impersonation', function (): void {
         ->toBeEmpty()
         ->and(auth()->user())
         ->toBeEmpty()
+        ->and($session->get('toast'))
+        ->toMatchArray([
+            'type' => 'success',
+            'message' => trans_impersonate('ui.buttons.stop.message'),
+        ])
     ;
 
     Event::assertDispatched(

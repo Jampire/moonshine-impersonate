@@ -14,7 +14,6 @@ use Jampire\MoonshineImpersonate\Http\Middleware\ImpersonateMiddleware;
 use Jampire\MoonshineImpersonate\Providers\EventServiceProvider;
 use Jampire\MoonshineImpersonate\Services\ImpersonateManager;
 use Jampire\MoonshineImpersonate\Support\Settings;
-use Jampire\MoonshineImpersonate\UI\View\Components\StopImpersonation;
 
 /**
  * Class ImpersonateServiceProvider
@@ -76,7 +75,7 @@ class ImpersonateServiceProvider extends ServiceProvider
     {
         $auth = app('auth');
 
-        $auth->extend('session', function (Application $app, $name, array $config) use ($auth): SessionGuard {
+        $auth->extend('session', function (Application $app, string $name, array $config) use ($auth): SessionGuard {
             $provider = $auth->createUserProvider($config['provider']);
 
             $guard = new SessionGuard($name, $provider, $app['session.store']);
@@ -99,17 +98,7 @@ class ImpersonateServiceProvider extends ServiceProvider
 
     private function registerViews(): void
     {
-        $this->loadViewComponentsAs(Settings::ALIAS, [
-            'stop' => StopImpersonation::class,
-        ]);
-
         $this->loadViewsFrom(__DIR__.'/../resources/views', Settings::ALIAS);
-
-        if (config_impersonate('buttons.stop.enabled') === true) {
-            config([
-                'moonshine.header' => Settings::ALIAS . '::impersonate.buttons.stop',
-            ]);
-        }
 
         if ($this->app->runningUnitTests()) {
             $this->loadViewsFrom(__DIR__.'/../tests/Stubs/resources/views', 'moonshine');
@@ -143,29 +132,6 @@ class ImpersonateServiceProvider extends ServiceProvider
             [
                 Settings::ALIAS,
                 'lang',
-            ]
-        );
-
-        // Views
-        $this->publishes(
-            [
-                __DIR__.'/../resources/views/impersonate' => resource_path('views/vendor/impersonate')
-            ],
-            [
-                Settings::ALIAS,
-                'views',
-            ]
-        );
-
-        // Views Components
-        $this->publishes(
-            [
-                __DIR__.'/../src/UI/View/Components' => app_path('View/Components'),
-                __DIR__.'/../resources/views/components' => resource_path('views/components'),
-            ],
-            [
-                Settings::ALIAS,
-                'view-components',
             ]
         );
     }

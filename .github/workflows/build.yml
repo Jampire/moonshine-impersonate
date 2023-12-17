@@ -41,7 +41,7 @@ jobs:
           echo "cache-key=${{ env.cache_key }}" >> "$GITHUB_OUTPUT"
           echo "extensions=${{ env.extensions }}" >> "$GITHUB_OUTPUT"
           echo "tools=${{ env.tools }}" >> "$GITHUB_OUTPUT"
-          echo "php_versions=['8.1', '8.2']" >> "$GITHUB_OUTPUT"
+          echo "php_versions=['8.1', '8.2', '8.3']" >> "$GITHUB_OUTPUT"
           echo "php_version=['8.1']" >> "$GITHUB_OUTPUT"
 
   code-style:
@@ -69,6 +69,7 @@ jobs:
       cache_key: ${{ needs.env-setup.outputs.cache-key }}
       extensions: ${{ needs.env-setup.outputs.extensions }}
       min_coverage: 100
+      type_coverage: 100
 
   rector:
     needs: [ env-setup ]

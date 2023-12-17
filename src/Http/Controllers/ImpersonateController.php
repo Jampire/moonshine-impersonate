@@ -20,26 +20,50 @@ class ImpersonateController extends Controller
 {
     public function enter(EnterFormRequest $request, EnterAction $action): Redirector|RedirectResponse
     {
-        if (!$action->execute($request->safe()->id)) {
-            // TODO: flash message
+        $result = $action->execute(id: $request->safe()->id, shouldValidate: false);
 
+        if (!$result) {
             // @codeCoverageIgnoreStart
+            toast_if(
+                condition: config_impersonate('show_notification'),
+                message: trans_impersonate('validation.enter.cannot_be_impersonated'),
+                type: 'error'
+            );
+
             return redirect()->back();
             // @codeCoverageIgnoreEnd
         }
+
+        toast_if(
+            condition: config_impersonate('show_notification'),
+            message: trans_impersonate('ui.buttons.enter.message'),
+            type: 'success'
+        );
 
         return redirect(config_impersonate('redirect_to'));
     }
 
     public function stop(StopFormRequest $request, StopAction $action): Redirector|RedirectResponse
     {
-        if (!$action->execute()) {
-            // TODO: flash message
+        $result = $action->execute();
 
+        if (!$result) {
             // @codeCoverageIgnoreStart
+            toast_if(
+                condition: config_impersonate('show_notification'),
+                message: trans_impersonate('validation.stop.is_not_impersonating'),
+                type: 'error'
+            );
+
             return redirect()->back();
             // @codeCoverageIgnoreEnd
         }
+
+        toast_if(
+            condition: config_impersonate('show_notification'),
+            message: trans_impersonate('ui.buttons.stop.message'),
+            type: 'success'
+        );
 
         return redirect(config_impersonate('redirect_to'));
     }

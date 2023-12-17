@@ -19,10 +19,11 @@ saves lots of time because you can see exactly what they see.
 
 ## Compatibility
 
-|        MoonShine         |  MoonShine Impersonate  |
-|:------------------------:|:-----------------------:|
-| \>= v1.52 and <= v1.57.4 |        <= v1.2.0        |
-|        >= v1.58.0        |        >= v1.3.0        |
+|        MoonShine         | MoonShine Impersonate | Currently supported |
+|:------------------------:|:---------------------:|:-------------------:|
+| \>= v1.52 and <= v1.57.4 |       <= v1.2.0       |         no          |
+|        >= v1.58.0        |       >= v1.3.0       |         no          |
+|         >= v2.0          |        >= v2.0        |         yes         |
 
 ## Installation
 
@@ -67,8 +68,8 @@ Please review and abide by the [Code of Conduct][5].
 - [Laravel Orchid impersonation mode][10]
 - [Laravel standalone package][11]
 
-[1]: https://moonshine.cutcode.dev/
-[2]: https://moonshine.cutcode.dev/section/installation
+[1]: https://moonshine-laravel.com/
+[2]: https://moonshine-laravel.com/docs/section/installation
 [3]: https://dzianiskotau.com/moonshine-impersonate/
 [4]: CONTRIBUTING.md
 [5]: CODE_OF_CONDUCT.md
