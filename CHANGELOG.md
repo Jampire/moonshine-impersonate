@@ -1,5 +1,11 @@
 # Release Notes for 2.x
 
+## [2.0.1 (2023-12-23)](https://github.com/Jampire/moonshine-impersonate/compare/v2.0.0...v2.0.1)
+
+### Fixes
+
+- Enter Action updates ([#28](https://github.com/Jampire/moonshine-impersonate/pull/28))
+
 ## [2.0.0 (2023-12-17)](https://github.com/Jampire/moonshine-impersonate/compare/v1.4.1...v2.0.0)
 
 ### Adds

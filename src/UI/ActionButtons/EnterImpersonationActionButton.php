@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Jampire\MoonshineImpersonate\UI\ActionButtons;
 
 use Illuminate\Contracts\Auth\Authenticatable;
-use Jampire\MoonshineImpersonate\Actions\EnterAction;
+use Jampire\MoonshineImpersonate\Services\ImpersonateManager;
 use MoonShine\ActionButtons\ActionButton;
 
 /**
@@ -24,7 +24,7 @@ final class EnterImpersonationActionButton
             ]),
         )
             ->canSee(
-                callback: fn (Authenticatable $item): bool => app(EnterAction::class)->manager->canEnter($item),
+                callback: fn (Authenticatable $item): bool => app(ImpersonateManager::class)->canEnter($item),
             )
             ->icon(config_impersonate('buttons.enter.icon'));
     }

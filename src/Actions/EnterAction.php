@@ -15,7 +15,7 @@ use Jampire\MoonshineImpersonate\Services\ImpersonateManager;
 final class EnterAction
 {
     public function __construct(
-        public readonly ImpersonateManager $manager
+        private readonly ImpersonateManager $manager
     ) {
         //
     }
