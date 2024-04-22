@@ -40,6 +40,9 @@
         "pestphp/pest-plugin-type-coverage": "^2.5",
         "rector/rector": "^0.16.0"
     },
+    "suggest": {
+        "moonshine/changelog": "Allows storing impersonate actions in the database"
+    },
     "autoload": {
         "psr-4": {
             "Jampire\\MoonshineImpersonate\\": "src/"
