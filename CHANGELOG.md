@@ -1,5 +1,11 @@
 # Release Notes for 2.x
 
+## [2.0.3 (2023-12-23)](https://github.com/Jampire/moonshine-impersonate/compare/v2.0.1...v2.0.3)
+
+### Fixes
+
+- Meta files updates
+
 ## [2.0.1 (2023-12-23)](https://github.com/Jampire/moonshine-impersonate/compare/v2.0.0...v2.0.1)
 
 ### Fixes
