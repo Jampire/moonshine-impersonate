@@ -14,7 +14,7 @@ use Jampire\MoonshineImpersonate\Support\Settings;
  *
  * @author Dzianis Kotau <me@dzianiskotau.com>
  */
-class ImpersonateMiddleware
+final class ImpersonateMiddleware
 {
     public function handle(Request $request, \Closure $next): mixed
     {

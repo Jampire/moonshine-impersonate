@@ -25,20 +25,20 @@
         "source": "https://github.com/Jampire/moonshine-impersonate"
     },
     "require": {
-        "php": "^8.1|^8.2|^8.3"
+        "php": "^8.2"
     },
     "require-dev": {
-        "driftingly/rector-laravel": "^0.20.0",
+        "driftingly/rector-laravel": "^1.2",
+        "larastan/larastan": "^2.0",
         "laravel/pint": "^1.10",
         "moonshine/changelog": "^1.0",
         "moonshine/moonshine": "^2.0",
         "nunomaduro/collision": "^7.5",
-        "nunomaduro/larastan": "^2.0",
         "orchestra/testbench": "^8.5",
         "pestphp/pest": "^2.6",
         "pestphp/pest-plugin-laravel": "^2.0",
         "pestphp/pest-plugin-type-coverage": "^2.5",
-        "rector/rector": "^0.16.0"
+        "rector/rector": "^1.2"
     },
     "suggest": {
         "moonshine/changelog": "Allows storing impersonate actions in the database"

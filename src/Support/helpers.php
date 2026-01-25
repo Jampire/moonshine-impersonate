@@ -32,10 +32,9 @@ if (!function_exists('trans_impersonate')) {
     /**
      * @param string $key Translation key without namespace
      * @param mixed[] $replace
-     * @param string|null $locale
      * @author Dzianis Kotau <me@dzianiskotau.com>
      */
-    function trans_impersonate(string $key, array $replace = [], string $locale = null): string
+    function trans_impersonate(string $key, array $replace = [], ?string $locale = null): string
     {
         return __(Settings::ALIAS.'::'.$key, $replace, $locale);
     }
@@ -47,6 +46,7 @@ if (!function_exists('view_impersonate')) {
      * @param mixed[]|Arrayable $data
      * @param mixed[] $mergeData
      * @author Dzianis Kotau <me@dzianiskotau.com>
+     * @phpstan-ignore missingType.generics
      */
     function view_impersonate(string $key, array|Arrayable $data = [], array $mergeData = []): View
     {

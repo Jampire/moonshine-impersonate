@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Event;
 use Jampire\MoonshineImpersonate\Actions\EnterAction;
 use Jampire\MoonshineImpersonate\Support\Settings;
 use Jampire\MoonshineImpersonate\Tests\Stubs\Models\MoonshineUser;
-
 use Jampire\MoonshineImpersonate\Tests\Stubs\Models\User;
 
 use function Pest\Laravel\actingAs;

@@ -13,6 +13,7 @@ use Jampire\MoonshineImpersonate\Tests\Stubs\Models\MoonshineUser;
  * Class MoonshineUserFactory
  *
  * @author Dzianis Kotau <me@dzianiskotau.com>
+ * @extends Factory<MoonshineUser>
  */
 class MoonshineUserFactory extends Factory
 {

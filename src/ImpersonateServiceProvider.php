@@ -20,7 +20,7 @@ use Jampire\MoonshineImpersonate\Support\Settings;
  *
  * @author Dzianis Kotau <me@dzianiskotau.com>
  */
-class ImpersonateServiceProvider extends ServiceProvider
+final class ImpersonateServiceProvider extends ServiceProvider
 {
     public function register(): void
     {

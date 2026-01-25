@@ -13,6 +13,7 @@ use Orchestra\Testbench\Factories\UserFactory as TestbenchUserFactory;
  * Class NonLogUserFactory
  *
  * @author Dzianis Kotau <me@dzianiskotau.com>
+ * @extends TestbenchUserFactory<NonLogUser>
  */
 class NonLogUserFactory extends TestbenchUserFactory
 {

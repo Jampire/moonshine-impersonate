@@ -16,7 +16,7 @@ use Jampire\MoonshineImpersonate\Http\Requests\StopFormRequest;
  *
  * @author Dzianis Kotau <me@dzianiskotau.com>
  */
-class ImpersonateController extends Controller
+final class ImpersonateController extends Controller
 {
     public function enter(EnterFormRequest $request, EnterAction $action): Redirector|RedirectResponse
     {

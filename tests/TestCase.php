@@ -37,7 +37,9 @@ abstract class TestCase extends BaseTestCase
         include_once __DIR__.'/Stubs/Database/Migrations/create_moonshine_users_table.php';
         include_once __DIR__.'/Stubs/Database/Migrations/create_moonshine_change_logs_table.php';
 
+        /** @phpstan-ignore-next-line */
         (new \CreateMoonShineUsersTable())->up();
+        /** @phpstan-ignore-next-line */
         (new \CreateMoonShineChangeLogsTable())->up();
     }
 }

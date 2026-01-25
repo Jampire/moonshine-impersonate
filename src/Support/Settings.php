@@ -9,7 +9,7 @@ namespace Jampire\MoonshineImpersonate\Support;
  *
  * @author Dzianis Kotau <me@dzianiskotau.com>
  */
-class Settings
+final readonly class Settings
 {
     final public const ALIAS = 'impersonate';
 

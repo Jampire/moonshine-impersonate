@@ -9,12 +9,15 @@ use RectorLaravel\Set\LaravelLevelSetList;
 
 return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->paths([
-        __DIR__ . '/config',
-        __DIR__ . '/database',
-        __DIR__ . '/lang',
-        __DIR__ . '/routes',
-        __DIR__ . '/src',
-        __DIR__ . '/tests',
+        __DIR__.'/config',
+        __DIR__.'/lang',
+        __DIR__.'/routes',
+        __DIR__.'/src',
+        __DIR__.'/tests',
+    ]);
+
+    $rectorConfig->skip([
+        __DIR__.'/tests/Unit/ArchTest.php',
     ]);
 
     $rectorConfig->sets([

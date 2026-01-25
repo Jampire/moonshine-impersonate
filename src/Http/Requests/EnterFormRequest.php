@@ -15,7 +15,7 @@ use Jampire\MoonshineImpersonate\Rules\IsNotImpersonating;
  *
  * @author Dzianis Kotau <me@dzianiskotau.com>
  */
-class EnterFormRequest extends FormRequest
+final class EnterFormRequest extends FormRequest
 {
     use WithMoonShineAuthorization;
 

@@ -14,7 +14,7 @@ use Jampire\MoonshineImpersonate\Support\Settings;
  *
  * @author Dzianis Kotau <me@dzianiskotau.com>
  */
-class CanBeImpersonated implements ValidationRule
+final class CanBeImpersonated implements ValidationRule
 {
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {

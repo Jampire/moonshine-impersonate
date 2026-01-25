@@ -3,42 +3,32 @@
          xsi:noNamespaceSchemaLocation="./vendor/phpunit/phpunit/phpunit.xsd"
          bootstrap="vendor/autoload.php"
          colors="true"
-         backupGlobals="false"
-         backupStaticAttributes="false"
-         verbose="true"
-         convertErrorsToExceptions="true"
-         convertNoticesToExceptions="true"
-         convertWarningsToExceptions="true"
-         processIsolation="false"
-         stopOnFailure="false"
 >
     <source>
         <include>
-            <directory suffix=".php">./src</directory>
-        </include>
-    </source>
-    <testsuites>
-        <testsuite name="Unit">
-            <directory suffix="Test.php">./tests/Unit</directory>
-        </testsuite>
-        <testsuite name="Feature">
-            <directory suffix="Test.php">./tests/Feature</directory>
-        </testsuite>
-    </testsuites>
-    <coverage processUncoveredFiles="true">
-        <include>
-            <directory suffix=".php">./src</directory>
+            <directory>./src</directory>
         </include>
         <exclude>
             <file>src/Support/helpers.php</file>
         </exclude>
+    </source>
+    <testsuites>
+        <testsuite name="Unit">
+            <directory>./tests/Unit</directory>
+        </testsuite>
+        <testsuite name="Feature">
+            <directory>./tests/Feature</directory>
+        </testsuite>
+    </testsuites>
+    <coverage>
         <report>
-            <clover outputFile="./build/coverage/log/coverage.xml"/>
             <html outputDirectory="./build/coverage/html" lowUpperBound="35" highLowerBound="80"/>
-            <text outputFile="./build/coverage/log/coverage.txt" showUncoveredFiles="true" showOnlySummary="true"/>
+            <text outputFile="./build/coverage/coverage.txt" showUncoveredFiles="true" showOnlySummary="true"/>
+            <xml outputDirectory="./build/coverage/xml"/>
         </report>
     </coverage>
     <php>
+        <env name="APP_ENV" value="testing"/>
         <env name="DB_CONNECTION" value="testing"/>
         <env name="APP_KEY" value="base64:IRvxzgVXG9MnUTYXdcrUF36qj9ziUzJ4Wzo+AUiZ9d4="/>
         <env name="MS_IMPERSONATE_ROUTE_MIDDLEWARE" value="web"/>

@@ -13,7 +13,7 @@ use Jampire\MoonshineImpersonate\Events\ImpersonationStopped;
  *
  * @author Dzianis Kotau <me@dzianiskotau.com>
  */
-class LogImpersonationStopped implements ShouldQueue
+final class LogImpersonationStopped implements ShouldQueue
 {
     public function handle(ImpersonationStopped $event): void
     {

@@ -12,6 +12,7 @@ use Illuminate\Queue\SerializesModels;
 /**
  * Class ImpersonationStopped
  *
+ * @todo ShouldQueue?
  * @author Dzianis Kotau <me@dzianiskotau.com>
  */
 final class ImpersonationStopped
