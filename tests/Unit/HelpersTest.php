@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Jampire\MoonshineImpersonate\Support\Settings;
+use MoonShine\Support\Enums\ToastType;
 
 test('route_impersonate() function returns route', function (): void {
     expect(route_impersonate('enter'))
@@ -22,31 +23,40 @@ test('trans_impersonate() function returns translation', function (): void {
     ;
 });
 
-test('view_impersonate() function returns View', function (): void {
-    expect(view_impersonate('components.impersonate-stop')::class)
-        ->toBe(view(Settings::ALIAS.'::components.impersonate-stop')::class)
-    ;
-});
-
-test('toast_if() function flashes message in a session', function (): void {
+test('toast_*_if() function flashes message in a session', function (
+    ToastType $type,
+): void {
     $message = 'hello';
-    toast_if(true, $message);
+
+    match ($type) {
+        ToastType::SUCCESS => toast_success_if(true, $message),
+        ToastType::ERROR => toast_error_if(true, $message),
+        default => toast_if(true, $message),
+    };
 
     $session = session();
     expect($session->has('toast'))
         ->toBeTrue()
         ->and($session->get('toast'))
         ->toMatchArray([
-            'type' => 'info',
+            'type' => $type->value,
             'message' => $message,
         ])
     ;
-});
+})->with('toast-set');
 
-test('toast_if() function does not flash message in a session', function (): void {
-    toast_if(false, 'hello');
+test('toast_*_if() function does not flash message in a session', function (
+    ToastType $type,
+): void {
+    $message = 'hello';
+
+    match ($type) {
+        ToastType::SUCCESS => toast_success_if(false, $message),
+        ToastType::ERROR => toast_error_if(false, $message),
+        default => toast_if(false, $message),
+    };
 
     expect(session()->has('toast'))
         ->toBeFalse()
     ;
-});
+})->with('toast-set');

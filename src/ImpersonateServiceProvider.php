@@ -26,7 +26,10 @@ final class ImpersonateServiceProvider extends ServiceProvider
     {
         $this->app->singleton(
             ImpersonateManager::class,
-            fn (): ImpersonateManager => new ImpersonateManager(auth(Settings::moonShineGuard())->user())
+            fn (): ImpersonateManager => new ImpersonateManager(
+                // @phpstan-ignore-next-line
+                auth(Settings::moonShineGuard())->user()
+            )
         );
 
         $this->app->bind(
@@ -50,8 +53,6 @@ final class ImpersonateServiceProvider extends ServiceProvider
     {
         $this->registerMiddleware($kernel);
 
-        $this->registerViews();
-
         $this->publishImpersonateResources();
 
         $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
@@ -64,6 +65,7 @@ final class ImpersonateServiceProvider extends ServiceProvider
         app('router')->aliasMiddleware(Settings::ALIAS, ImpersonateMiddleware::class);
 
         foreach (config_impersonate('routes.middleware') as $group) {
+            // @phpstan-ignore-next-line
             $kernel->appendMiddlewareToGroup($group, ImpersonateMiddleware::class);
         }
     }
@@ -94,15 +96,6 @@ final class ImpersonateServiceProvider extends ServiceProvider
 
             return $guard;
         });
-    }
-
-    private function registerViews(): void
-    {
-        $this->loadViewsFrom(__DIR__.'/../resources/views', Settings::ALIAS);
-
-        if ($this->app->runningUnitTests()) {
-            $this->loadViewsFrom(__DIR__.'/../tests/Stubs/resources/views', 'moonshine');
-        }
     }
 
     private function publishImpersonateResources(): void

@@ -5,22 +5,24 @@ declare(strict_types=1);
 namespace Jampire\MoonshineImpersonate\UI\ActionButtons;
 
 use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Database\Eloquent\Model;
 use Jampire\MoonshineImpersonate\Services\ImpersonateManager;
-use MoonShine\ActionButtons\ActionButton;
+use Jampire\MoonshineImpersonate\UI\ActionButtons\Contracts\Resolvable;
+use MoonShine\UI\Components\ActionButton;
 
 /**
  * Class EnterImpersonationActionButton
  *
  * @author Dzianis Kotau <me@dzianiskotau.com>
  */
-final class EnterImpersonationActionButton
+final readonly class EnterImpersonationActionButton implements Resolvable
 {
     public static function resolve(): ActionButton
     {
         return ActionButton::make(
             label: trans_impersonate('ui.buttons.enter.label'),
-            url: static fn (mixed $data): string => route_impersonate('enter', [
-                config_impersonate('resource_item_key') => $data->getKey(),
+            url: static fn (Model $item): string => route_impersonate('enter', [
+                config_impersonate('resource_item_key') => $item->getKey(),
             ]),
         )
             ->canSee(

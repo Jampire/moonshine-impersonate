@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Event;
 use Jampire\MoonshineImpersonate\Actions\EnterAction;
+use Jampire\MoonshineImpersonate\Events\ImpersonationEntered;
 use Jampire\MoonshineImpersonate\Support\Settings;
 use Jampire\MoonshineImpersonate\Tests\Stubs\Models\MoonshineUser;
 use Jampire\MoonshineImpersonate\Tests\Stubs\Models\User;
@@ -29,7 +29,15 @@ test('enter action validation works correctly', function (): void {
 
     expect($action->execute($user->getKey()))
         ->toBeTrue()
-        ->and($action->execute($user->getKey()))
+    ;
+
+    Event::assertDispatched(
+        ImpersonationEntered::class,
+        fn (ImpersonationEntered $event): bool => $event->impersonator->id === $moonShineUser->id
+            && $event->impersonated->id === $user->id
+    );
+
+    expect($action->execute($user->getKey()))
         ->toBeFalse()
     ;
 });
@@ -40,8 +48,8 @@ it('cannot execute enter action if user does not found', function (): void {
 
     $action = app(EnterAction::class);
 
-    expect(fn () => $action->execute(123))
-        ->toThrow(ModelNotFoundException::class)
+    expect($action->execute(123))
+        ->toBeFalse()
     ;
 });
 
@@ -64,7 +72,7 @@ test('enter action cannot be executed by admin with no permission', function ():
 
     $action = app(EnterAction::class);
 
-    expect($action->execute($user->getKey(), true))
+    expect($action->execute($user->getKey()))
         ->toBeFalse()
     ;
 });

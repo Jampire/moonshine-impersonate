@@ -23,7 +23,8 @@ saves lots of time because you can see exactly what they see.
 |:------------------------:|:---------------------:|:-------------------:|
 | \>= v1.52 and <= v1.57.4 |       <= v1.2.0       |         no          |
 |        >= v1.58.0        |       >= v1.3.0       |         no          |
-|         >= v2.0          |        >= v2.0        |         yes         |
+|         >= v2.0          |        >= v2.0        |         no          |
+|         >= v4.0          |        >= v3.0        |         yes         |
 
 ## Installation
 
@@ -68,14 +69,14 @@ Please review and abide by the [Code of Conduct][5].
 - [Laravel Orchid impersonation mode][10]
 - [Laravel standalone package][11]
 
-[1]: https://moonshine-laravel.com/
-[2]: https://moonshine-laravel.com/docs/section/installation
-[3]: https://dzianiskotau.com/projects/moonshine-impersonate/v2/docs/ru/
+[1]: https://getmoonshine.app/
+[2]: https://getmoonshine.app/en/docs/4.x/installation
+[3]: https://dzianiskotau.com/projects/moonshine-impersonate/v3/docs/ru/
 [4]: CONTRIBUTING.md
 [5]: CODE_OF_CONDUCT.md
 [6]: https://github.com/Jampire
 [7]: https://github.com/Jampire/moonshine-impersonate/graphs/contributors
 [8]: LICENSE
-[9]: https://nova.laravel.com/docs/4.0/customization/impersonation.html
-[10]: https://orchid.software/en/docs/access/#user-impersonation
+[9]: https://nova.laravel.com/docs/v5/customization/impersonation#impersonation
+[10]: https://orchid.software/en/docs/permissions/#user-impersonation
 [11]: https://laravel-news.com/laravel-impersonate

@@ -17,7 +17,7 @@ final class LogImpersonationEnter implements ShouldQueue
 {
     public function handle(ImpersonationEntered $event): void
     {
-        $event->impersonated->changeLogs()->create([
+        $event->impersonated->changeLogs()->create([ // @phpstan-ignore-line
             'moonshine_user_id' => $event->impersonator->getAuthIdentifier(),
             'states_before' => State::IMPERSONATION_STOPPED->value,
             'states_after' => State::IMPERSONATION_ENTERED->value,

@@ -33,7 +33,7 @@ final readonly class Settings
 
     public static function moonShineGuard(): string
     {
-        if (config('moonshine.auth.enable', false) === false) {
+        if (config('moonshine.auth.enabled', false) === false) {
             return config('auth.defaults.guard');
         }
 

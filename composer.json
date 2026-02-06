@@ -31,8 +31,8 @@
         "driftingly/rector-laravel": "^1.2",
         "larastan/larastan": "^2.0",
         "laravel/pint": "^1.10",
-        "moonshine/changelog": "^1.0",
-        "moonshine/moonshine": "^2.0",
+        "moonshine/changelog": "^3.0",
+        "moonshine/moonshine": "^4.0",
         "nunomaduro/collision": "^7.5",
         "orchestra/testbench": "^8.5",
         "pestphp/pest": "^2.6",
@@ -57,7 +57,7 @@
         }
     },
     "conflict": {
-        "moonshine/moonshine": "<2"
+        "moonshine/moonshine": "<4"
     },
     "scripts": {
         "post-autoload-dump": [

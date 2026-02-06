@@ -6,7 +6,7 @@ namespace Jampire\MoonshineImpersonate\Tests\Stubs\Models;
 
 use Jampire\MoonshineImpersonate\Services\Contracts\Impersonable;
 use Jampire\MoonshineImpersonate\Tests\Stubs\Database\Factories\MoonshineUserFactory;
-use MoonShine\Models\MoonshineUser as BaseUser;
+use MoonShine\Laravel\Models\MoonshineUser as BaseUser;
 
 /**
  * Class User

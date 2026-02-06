@@ -1,9 +1,9 @@
 <?php
 
-use Illuminate\Contracts\Support\Arrayable;
-use Illuminate\Contracts\View\View;
+declare(strict_types=1);
+
 use Jampire\MoonshineImpersonate\Support\Settings;
-use MoonShine\MoonShineUI;
+use MoonShine\Support\Enums\ToastType;
 
 if (!function_exists('route_impersonate')) {
     /**
@@ -40,30 +40,36 @@ if (!function_exists('trans_impersonate')) {
     }
 }
 
-if (!function_exists('view_impersonate')) {
-    /**
-     * @param string $key Translation key without namespace
-     * @param mixed[]|Arrayable $data
-     * @param mixed[] $mergeData
-     * @author Dzianis Kotau <me@dzianiskotau.com>
-     * @phpstan-ignore missingType.generics
-     */
-    function view_impersonate(string $key, array|Arrayable $data = [], array $mergeData = []): View
-    {
-        return view(Settings::ALIAS.'::'.$key, $data, $mergeData);
-    }
-}
-
 if (!function_exists('toast_if')) {
     /**
      * @author Dzianis Kotau <me@dzianiskotau.com>
      */
-    function toast_if(bool $condition, string $message, string $type = 'info'): void
+    function toast_if(bool $condition, string $message, ToastType $type = ToastType::INFO): void
     {
         if (!$condition) {
             return;
         }
 
-        MoonShineUI::toast(message: $message, type: $type);
+        toast(message: $message, type: $type);
+    }
+}
+
+if (!function_exists('toast_error_if')) {
+    /**
+     * @author Dzianis Kotau <me@dzianiskotau.com>
+     */
+    function toast_error_if(bool $condition, string $message): void
+    {
+        toast_if($condition, $message, ToastType::ERROR);
+    }
+}
+
+if (!function_exists('toast_success_if')) {
+    /**
+     * @author Dzianis Kotau <me@dzianiskotau.com>
+     */
+    function toast_success_if(bool $condition, string $message): void
+    {
+        toast_if($condition, $message, ToastType::SUCCESS);
     }
 }

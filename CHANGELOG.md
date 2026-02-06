@@ -1,3 +1,11 @@
+# Release Notes for 3.x
+
+## [3.0.0 (2026-02-08)](https://github.com/Jampire/moonshine-impersonate/compare/v2.0.3...v3.0.0)
+
+### Adds
+
+- MoonShine v4 support ([#33](https://github.com/Jampire/moonshine-impersonate/pull/33))
+
 # Release Notes for 2.x
 
 ## [2.0.3 (2023-12-23)](https://github.com/Jampire/moonshine-impersonate/compare/v2.0.1...v2.0.3)

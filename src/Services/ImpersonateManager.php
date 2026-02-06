@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Jampire\MoonshineImpersonate\Services;
 
 use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Jampire\MoonshineImpersonate\Services\Contracts\BeImpersonable;
 use Jampire\MoonshineImpersonate\Services\Contracts\Impersonable;
 use Jampire\MoonshineImpersonate\Support\Settings;
@@ -24,6 +25,9 @@ final class ImpersonateManager
         //
     }
 
+    /**
+     * @throws ModelNotFoundException
+     */
     public function findUserById(int $id): Authenticatable
     {
         if ($this->user instanceof Authenticatable && $this->user->getAuthIdentifier() === $id) {
@@ -38,37 +42,29 @@ final class ImpersonateManager
 
     public function getUserFromSession(): ?Authenticatable
     {
-        // @codeCoverageIgnoreStart
         try {
             $id = session()->get(Settings::key());
+
+            return $id === null ? null : $this->findUserById($id);
         } catch (\Throwable) {
             return null;
         }
-        // @codeCoverageIgnoreEnd
-
-        return $id === null ? null : $this->findUserById($id);
     }
 
     public function canEnter(Authenticatable $userToImpersonate): bool
     {
-        if ($this->isImpersonating()) {
-            return false;
-        }
-
-        if (!$this->canImpersonate()) {
-            return false;
-        }
-
-        return $this->canBeImpersonated($userToImpersonate);
+        return match (true) {
+            $this->isImpersonating(), !$this->canImpersonate() => false,
+            default => $this->canBeImpersonated($userToImpersonate),
+        };
     }
 
     public function canStop(): bool
     {
-        if (!$this->isImpersonating()) {
-            return false;
-        }
-
-        return $this->canImpersonate();
+        return match (true) {
+            !$this->isImpersonating() => false,
+            default => $this->canImpersonate(),
+        };
     }
 
     public function isImpersonating(): bool

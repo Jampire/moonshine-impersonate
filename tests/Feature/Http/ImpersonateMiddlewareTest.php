@@ -35,10 +35,7 @@ it('authorizes impersonator as impersonated user', function (): void {
     ;
 
     actingAs($moonShineUser, Settings::moonShineGuard());
-    get(route_impersonate('enter', [
-        config_impersonate('resource_item_key') => $user->id,
-    ]))
-        ->assertSessionHasNoErrors();
+    enterResponse($user->id)->assertSessionHasNoErrors();
 
     $response = get(route('test.me'));
 
@@ -56,10 +53,7 @@ it('cannot impersonate when admin is not authorized', function (): void {
     $moonShineUser = MoonshineUser::factory()->create();
 
     actingAs($moonShineUser, Settings::moonShineGuard());
-    get(route_impersonate('enter', [
-        config_impersonate('resource_item_key') => $user->id,
-    ]))
-        ->assertSessionHasNoErrors();
+    enterResponse($user->id)->assertSessionHasNoErrors();
 
     Auth::logout();
 

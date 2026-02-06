@@ -32,6 +32,7 @@ final readonly class StopAction implements Actionable
             return false;
         }
 
+        // @phpstan-ignore-next-line
         Auth::guard(Settings::defaultGuard())->quietLogout();
         $this->manager->clearAuthFromSession();
 

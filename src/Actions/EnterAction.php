@@ -26,7 +26,11 @@ final readonly class EnterAction implements Actionable
      */
     public function execute(int $id, bool $shouldValidate = true): bool
     {
-        $user = $this->manager->findUserById($id);
+        try {
+            $user = $this->manager->findUserById($id);
+        } catch (\Throwable) {
+            return false;
+        }
 
         if ($shouldValidate && !$this->manager->canEnter($user)) {
             return false;
