@@ -19,7 +19,7 @@ permissions:
 env:
   extensions: simplexml, mbstring
   tools: composer, laravel/pint, nunomaduro/larastan, pestphp/pest
-  ini_values: max_execution_time=180, date.timezone=Asia/Tbilisi
+  ini_values: max_execution_time=180, date.timezone=Europe/Warsaw
   cache_key: php-cache-v1
 
 jobs:
@@ -41,8 +41,8 @@ jobs:
           echo "cache-key=${{ env.cache_key }}" >> "$GITHUB_OUTPUT"
           echo "extensions=${{ env.extensions }}" >> "$GITHUB_OUTPUT"
           echo "tools=${{ env.tools }}" >> "$GITHUB_OUTPUT"
-          echo "php_versions=['8.1', '8.2', '8.3']" >> "$GITHUB_OUTPUT"
-          echo "php_version=['8.1']" >> "$GITHUB_OUTPUT"
+          echo "php_versions=['8.2', '8.3', '8.4']" >> "$GITHUB_OUTPUT"
+          echo "php_version=['8.2']" >> "$GITHUB_OUTPUT"
 
   code-style:
     needs: [ env-setup ]

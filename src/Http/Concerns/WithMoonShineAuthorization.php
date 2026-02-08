@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Jampire\MoonshineImpersonate\Http\Concerns;
 
-use MoonShine\MoonShineAuth;
+use MoonShine\Laravel\MoonShineAuth;
 
 /**
  * Trait WithMoonShineAuthorization
@@ -15,6 +15,6 @@ trait WithMoonShineAuthorization
 {
     public function authorize(): bool
     {
-        return MoonShineAuth::guard()->check();
+        return MoonShineAuth::getGuard()->check();
     }
 }

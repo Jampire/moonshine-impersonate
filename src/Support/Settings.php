@@ -9,7 +9,7 @@ namespace Jampire\MoonshineImpersonate\Support;
  *
  * @author Dzianis Kotau <me@dzianiskotau.com>
  */
-class Settings
+final readonly class Settings
 {
     final public const ALIAS = 'impersonate';
 
@@ -33,7 +33,7 @@ class Settings
 
     public static function moonShineGuard(): string
     {
-        if (config('moonshine.auth.enable', false) === false) {
+        if (config('moonshine.auth.enabled', false) === false) {
             return config('auth.defaults.guard');
         }
 

@@ -16,31 +16,32 @@ use Jampire\MoonshineImpersonate\Http\Requests\StopFormRequest;
  *
  * @author Dzianis Kotau <me@dzianiskotau.com>
  */
-class ImpersonateController extends Controller
+final class ImpersonateController extends Controller
 {
     public function enter(EnterFormRequest $request, EnterAction $action): Redirector|RedirectResponse
     {
-        $result = $action->execute(id: $request->safe()->id, shouldValidate: false);
+        // @phpstan-ignore-next-line
+        $id = $request->safe()->id;
+        $result = $action->execute(id: $id, shouldValidate: false);
 
         if (!$result) {
             // @codeCoverageIgnoreStart
-            toast_if(
+            toast_error_if(
                 condition: config_impersonate('show_notification'),
                 message: trans_impersonate('validation.enter.cannot_be_impersonated'),
-                type: 'error'
             );
 
+            // @phpstan-ignore-next-line
             return redirect()->back();
             // @codeCoverageIgnoreEnd
         }
 
-        toast_if(
+        toast_success_if(
             condition: config_impersonate('show_notification'),
             message: trans_impersonate('ui.buttons.enter.message'),
-            type: 'success'
         );
 
-        return redirect(config_impersonate('redirect_to'));
+        return redirect(config_impersonate('redirect_to.enter'));
     }
 
     public function stop(StopFormRequest $request, StopAction $action): Redirector|RedirectResponse
@@ -49,22 +50,21 @@ class ImpersonateController extends Controller
 
         if (!$result) {
             // @codeCoverageIgnoreStart
-            toast_if(
+            toast_error_if(
                 condition: config_impersonate('show_notification'),
                 message: trans_impersonate('validation.stop.is_not_impersonating'),
-                type: 'error'
             );
 
+            // @phpstan-ignore-next-line
             return redirect()->back();
             // @codeCoverageIgnoreEnd
         }
 
-        toast_if(
+        toast_success_if(
             condition: config_impersonate('show_notification'),
             message: trans_impersonate('ui.buttons.stop.message'),
-            type: 'success'
         );
 
-        return redirect(config_impersonate('redirect_to'));
+        return redirect(config_impersonate('redirect_to.stop'));
     }
 }

@@ -47,3 +47,37 @@ it('cannot be impersonated with no permissions', function (): void {
         ->toBeFalse()
     ;
 });
+
+it('can stop impersonation', function (): void {
+    $user = User::factory()->create();
+    $moonShineUser = MoonshineUser::factory()->create();
+
+    $manager = new ImpersonateManager($moonShineUser);
+    $manager->saveAuthInSession($user);
+
+    expect($manager->canStop())
+        ->toBeTrue()
+    ;
+});
+
+it('cannot stop impersonation if not admin', function (): void {
+    $user = User::factory()->create();
+    $moonShineUser = MoonshineUser::factory()->cannotImpersonate()->create();
+
+    $manager = new ImpersonateManager($moonShineUser);
+    $manager->saveAuthInSession($user);
+
+    expect($manager->canStop())
+        ->toBeFalse()
+    ;
+});
+
+it('cannot stop impersonation if is not in impersonation mode', function (): void {
+    $moonShineUser = MoonshineUser::factory()->create();
+
+    $manager = new ImpersonateManager($moonShineUser);
+
+    expect($manager->canStop())
+        ->toBeFalse()
+    ;
+});

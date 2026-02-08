@@ -24,11 +24,9 @@ test('privileged user can stop impersonation', function (): void {
     $moonShineUser = MoonshineUser::factory()->create();
 
     actingAs($moonShineUser, Settings::moonShineGuard());
-    get(route_impersonate('enter', [
-        config_impersonate('resource_item_key') => $user->id,
-    ]))
+    enterResponse($user->id)
         ->assertSessionHasNoErrors()
-        ->assertRedirect('/');
+        ->assertRedirect('/admin');
 
     $response = get(route_impersonate('stop'));
 

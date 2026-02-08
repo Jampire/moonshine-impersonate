@@ -13,7 +13,7 @@ use Jampire\MoonshineImpersonate\Tests\Stubs\Database\Factories\NonLogUserFactor
  *
  * @author Dzianis Kotau <me@dzianiskotau.com>
  */
-class NonLogUser extends BaseUser
+final class NonLogUser extends BaseUser
 {
     use HasFactory;
 

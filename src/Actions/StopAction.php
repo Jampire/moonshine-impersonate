@@ -6,6 +6,7 @@ namespace Jampire\MoonshineImpersonate\Actions;
 
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Support\Facades\Auth;
+use Jampire\MoonshineImpersonate\Actions\Contracts\Actionable;
 use Jampire\MoonshineImpersonate\Events\ImpersonationStopped;
 use Jampire\MoonshineImpersonate\Services\ImpersonateManager;
 use Jampire\MoonshineImpersonate\Support\Settings;
@@ -15,10 +16,10 @@ use Jampire\MoonshineImpersonate\Support\Settings;
  *
  * @author Dzianis Kotau <me@dzianiskotau.com>
  */
-final class StopAction
+final readonly class StopAction implements Actionable
 {
     public function __construct(
-        private readonly ImpersonateManager $manager
+        private ImpersonateManager $manager,
     ) {
         //
     }
@@ -31,6 +32,7 @@ final class StopAction
             return false;
         }
 
+        // @phpstan-ignore-next-line
         Auth::guard(Settings::defaultGuard())->quietLogout();
         $this->manager->clearAuthFromSession();
 

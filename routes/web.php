@@ -5,7 +5,7 @@ declare(strict_types=1);
 use Illuminate\Support\Facades\Route;
 use Jampire\MoonshineImpersonate\Http\Controllers\ImpersonateController;
 use Jampire\MoonshineImpersonate\Support\Settings;
-use MoonShine\Http\Middleware\ChangeLocale;
+use MoonShine\Laravel\Http\Middleware\ChangeLocale;
 
 $middlewares = config_impersonate('routes.middleware');
 $middlewares[] = ChangeLocale::class;

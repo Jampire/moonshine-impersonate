@@ -23,6 +23,10 @@ it('uses correct MoonShine guard', function (): void {
 });
 
 it('uses default guard if MoonShine guard is disabled', function (): void {
+    config([
+        'moonshine.auth.enabled' => false,
+    ]);
+
     expect(Settings::moonShineGuard())
         ->toBe('web');
 });

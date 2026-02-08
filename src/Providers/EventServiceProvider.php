@@ -15,7 +15,7 @@ use Jampire\MoonshineImpersonate\Listeners\LogImpersonationStopped;
  *
  * @author Dzianis Kotau <me@dzianiskotau.com>
  */
-class EventServiceProvider extends ServiceProvider
+final class EventServiceProvider extends ServiceProvider
 {
     protected $listen = [
         ImpersonationEntered::class => [

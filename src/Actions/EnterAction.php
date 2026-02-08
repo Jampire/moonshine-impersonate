@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Jampire\MoonshineImpersonate\Actions;
 
+use Jampire\MoonshineImpersonate\Actions\Contracts\Actionable;
 use Jampire\MoonshineImpersonate\Events\ImpersonationEntered;
 use Jampire\MoonshineImpersonate\Services\ImpersonateManager;
 
@@ -12,10 +13,10 @@ use Jampire\MoonshineImpersonate\Services\ImpersonateManager;
  *
  * @author Dzianis Kotau <me@dzianiskotau.com>
  */
-final class EnterAction
+final readonly class EnterAction implements Actionable
 {
     public function __construct(
-        private readonly ImpersonateManager $manager
+        private ImpersonateManager $manager,
     ) {
         //
     }
@@ -25,7 +26,11 @@ final class EnterAction
      */
     public function execute(int $id, bool $shouldValidate = true): bool
     {
-        $user = $this->manager->findUserById($id);
+        try {
+            $user = $this->manager->findUserById($id);
+        } catch (\Throwable) {
+            return false;
+        }
 
         if ($shouldValidate && !$this->manager->canEnter($user)) {
             return false;

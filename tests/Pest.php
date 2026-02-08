@@ -53,7 +53,7 @@ expect()->extend('toBeOne', fn () => $this->toBe(1));
 function enableMoonShineGuard(): void
 {
     config([
-        'moonshine.auth.enable' => true,
+        'moonshine.auth.enabled' => true,
         'moonshine.auth.guard' => 'moonshine',
     ]);
 }
@@ -118,17 +118,15 @@ function registerHomePage(): void
         });
 }
 
-function enterResponse(string $routeFn, string $routeName, int $id): TestResponse
+function enterResponse(int $userId, string $method = 'get'): TestResponse
 {
-    if ($routeFn === 'get') {
-        $response = get(route_impersonate($routeName, [
-            config_impersonate('resource_item_key') => $id,
-        ]));
-    } else {
-        $response = post(route_impersonate($routeName, [
-            config_impersonate('resource_item_key') => $id,
-        ]));
-    }
+    $route = route_impersonate(
+        $method === 'get' ? 'enter' : 'enter-confirm',
+        [config_impersonate('resource_item_key') => $userId]
+    );
 
-    return $response;
+    return match ($method) {
+        'post' => post($route),
+        default => get($route),
+    };
 }

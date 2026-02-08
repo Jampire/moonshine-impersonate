@@ -13,11 +13,11 @@ use Jampire\MoonshineImpersonate\Events\ImpersonationStopped;
  *
  * @author Dzianis Kotau <me@dzianiskotau.com>
  */
-class LogImpersonationStopped implements ShouldQueue
+final class LogImpersonationStopped implements ShouldQueue
 {
     public function handle(ImpersonationStopped $event): void
     {
-        $event->impersonated->changeLogs()->create([
+        $event->impersonated->changeLogs()->create([ // @phpstan-ignore-line
             'moonshine_user_id' => $event->impersonator->getAuthIdentifier(),
             'states_before' => State::IMPERSONATION_ENTERED->value,
             'states_after' => State::IMPERSONATION_STOPPED->value,

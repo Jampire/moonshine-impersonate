@@ -14,15 +14,22 @@ use Jampire\MoonshineImpersonate\Support\Settings;
  *
  * @author Dzianis Kotau <me@dzianiskotau.com>
  */
-class CanBeImpersonated implements ValidationRule
+final class CanBeImpersonated implements ValidationRule
 {
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
         $manager = app(ImpersonateManager::class);
-        $user = $manager->findUserById($value);
+        $message = Settings::ALIAS.'::validation.enter.cannot_be_impersonated';
+        $user = null;
 
-        if (!$manager->canBeImpersonated($user)) {
-            $fail(Settings::ALIAS.'::validation.enter.cannot_be_impersonated')->translate();
+        try {
+            $user = $manager->findUserById($value);
+        } catch (\Throwable) {
+            //
+        }
+
+        if ($user === null || !$manager->canBeImpersonated($user)) {
+            $fail($message)->translate();
         }
     }
 }

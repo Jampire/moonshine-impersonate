@@ -15,7 +15,7 @@ use Jampire\MoonshineImpersonate\Support\Settings;
  *
  * @author Dzianis Kotau <me@dzianiskotau.com>
  */
-class StopFormRequest extends FormRequest
+final class StopFormRequest extends FormRequest
 {
     use WithMoonShineAuthorization;
 
